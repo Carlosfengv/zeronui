@@ -1,0 +1,5 @@
+{
+  "root": true,
+  "title": "Blocks",
+  "pages": ["index", "---Application Shells---", "user-app-layout"]
+}

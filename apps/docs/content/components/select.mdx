@@ -1,0 +1,37 @@
+---
+title: Select
+description: Base UI select primitives styled with Shadcn defaults.
+icon: ListFilter
+dependencies:
+  - https://base-ui.com/react/components/select
+installer: select
+---
+
+## Usage
+
+```tsx
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@zeron-ui/ui/select";
+
+export function Example() {
+  return (
+    <Select>
+      <SelectTrigger>
+        <SelectValue placeholder="Theme" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="light">Light</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+## Examples
+
+<Preview path="select" />

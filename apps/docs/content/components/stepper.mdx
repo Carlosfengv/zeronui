@@ -1,0 +1,67 @@
+---
+title: Stepper
+description: Accessible step-by-step navigation with horizontal and vertical layouts.
+icon: ListChecks
+dependencies:
+  - https://www.diceui.com/docs/components/base/stepper
+installer: stepper
+---
+
+## Usage
+
+```tsx
+import {
+  Stepper,
+  StepperContent,
+  StepperIndicator,
+  StepperItem,
+  StepperList,
+  StepperTrigger,
+} from "@zeron-ui/ui/stepper";
+
+export function Example() {
+  return (
+    <Stepper defaultValue="account">
+      <StepperList>
+        <StepperItem value="account">
+          <StepperTrigger>
+            <StepperIndicator />
+          </StepperTrigger>
+        </StepperItem>
+        <StepperItem value="profile">
+          <StepperTrigger>
+            <StepperIndicator />
+          </StepperTrigger>
+        </StepperItem>
+      </StepperList>
+      <StepperContent value="account">Account setup</StepperContent>
+      <StepperContent value="profile">Profile details</StepperContent>
+    </Stepper>
+  );
+}
+```
+
+## Validation
+
+```tsx
+<Stepper
+  defaultValue="account"
+  onValidate={async (_value, direction) => {
+    return direction === "prev" || formIsValid;
+  }}
+>
+  {/* steps */}
+</Stepper>
+```
+
+## Examples
+
+### Horizontal Layout
+
+<Preview path="stepper" />
+
+### Vertical Layout
+
+A stepper with vertical orientation for compact layouts.
+
+<Preview path="stepper-vertical" />

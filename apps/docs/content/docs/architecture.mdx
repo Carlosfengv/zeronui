@@ -1,0 +1,30 @@
+---
+title: Architecture
+description: The project layout and ownership rules for Zeron UI.
+icon: Network
+---
+
+## Shape
+
+```txt
+apps/docs              Documentation site
+packages/ui           Reusable component source
+packages/registry     Copy-paste registry metadata
+packages/typescript-config Shared TypeScript config
+```
+
+## Source of truth
+
+`packages/ui` is the source of truth for reusable components. The docs app can import from it, but reusable product components should not import from `apps/docs`.
+
+## Documentation contract
+
+Every component page can declare:
+
+```yaml
+installer: button
+dependencies:
+  - https://tailwindcss.com/
+```
+
+The `installer` field connects a page to an example file and installation command.

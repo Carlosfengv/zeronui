@@ -1,0 +1,5 @@
+{
+  "root": true,
+  "title": "Docs",
+  "pages": ["---Overview---", "index", "setup", "architecture", "philosophy"]
+}

@@ -1,0 +1,34 @@
+---
+title: Sidebar
+description: A composable collapsible application sidebar with desktop, mobile, and icon states.
+icon: PanelLeft
+dependencies:
+  - /components/button
+  - /components/input
+  - /components/separator
+  - /components/skeleton
+  - /components/tooltip
+installer: sidebar
+---
+
+## Usage
+
+```tsx
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@zeron-ui/ui/sidebar";
+
+export function Example() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent />
+      </Sidebar>
+      <SidebarTrigger />
+    </SidebarProvider>
+  );
+}
+```

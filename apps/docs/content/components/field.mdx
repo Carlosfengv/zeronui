@@ -1,0 +1,29 @@
+---
+title: Field
+description: Shadcn field primitives for composing accessible form layouts.
+icon: Rows3
+dependencies:
+  - https://ui.shadcn.com/docs/components/field
+installer: field
+---
+
+## Usage
+
+```tsx
+import { Field, FieldDescription, FieldLabel } from "@zeron-ui/ui/field";
+import { Input } from "@zeron-ui/ui/input";
+
+export function Example() {
+  return (
+    <Field>
+      <FieldLabel htmlFor="email">Email</FieldLabel>
+      <Input id="email" placeholder="hello@example.com" />
+      <FieldDescription>Used for account notifications.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+## Examples
+
+<Preview path="field" />

@@ -1,0 +1,34 @@
+---
+title: Tooltip
+description: Base UI tooltip primitives styled with Shadcn defaults.
+icon: MessageCircleQuestion
+dependencies:
+  - https://base-ui.com/react/components/tooltip
+installer: tooltip
+---
+
+## Usage
+
+```tsx
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@zeron-ui/ui/tooltip";
+
+export function Example() {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>Hover</TooltipTrigger>
+        <TooltipContent>Helpful detail</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+## Examples
+
+<Preview path="tooltip" />

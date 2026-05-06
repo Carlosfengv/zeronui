@@ -1,0 +1,27 @@
+---
+title: Radio Group
+description: Accessible single-choice radio group built on Base UI.
+icon: CircleDot
+dependencies:
+  - https://base-ui.com/react/components/radio
+installer: radio-group
+---
+
+## Usage
+
+```tsx
+import { RadioGroup, RadioGroupItem } from "@zeron-ui/ui/radio-group";
+
+export function Example() {
+  return (
+    <RadioGroup defaultValue="one">
+      <RadioGroupItem value="one" />
+      <RadioGroupItem value="two" />
+    </RadioGroup>
+  );
+}
+```
+
+## Examples
+
+<Preview path="radio-group" />

@@ -1,0 +1,27 @@
+---
+title: Alert
+description: Shadcn alert primitive for important inline messages.
+icon: TriangleAlert
+dependencies:
+  - https://ui.shadcn.com/docs/components/alert
+installer: alert
+---
+
+## Usage
+
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@zeron-ui/ui/alert";
+
+export function Example() {
+  return (
+    <Alert>
+      <AlertTitle>Heads up</AlertTitle>
+      <AlertDescription>You can add components to your app.</AlertDescription>
+    </Alert>
+  );
+}
+```
+
+## Examples
+
+<Preview path="alert" />

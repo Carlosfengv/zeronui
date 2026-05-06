@@ -1,0 +1,27 @@
+---
+title: Sonner
+description: Shadcn toaster component built on Sonner.
+icon: Bell
+dependencies:
+  - https://sonner.emilkowal.ski/
+installer: sonner
+---
+
+## Usage
+
+```tsx
+import { Toaster } from "@zeron-ui/ui/sonner";
+
+export function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      {children}
+      <Toaster />
+    </>
+  );
+}
+```
+
+## Examples
+
+<Preview path="sonner" />

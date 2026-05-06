@@ -1,0 +1,491 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "zeron-ui",
+  "homepage": "https://zeron-ui.local",
+  "items": [
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Shadcn alert primitive for important inline messages.",
+      "files": ["packages/ui/src/components/alert.tsx"]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Modal confirmation dialog primitives built on Base UI.",
+      "registryDependencies": ["button"],
+      "files": ["packages/ui/src/components/alert-dialog.tsx"]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Image and fallback primitives for user identity.",
+      "files": ["packages/ui/src/components/avatar.tsx"]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Shadcn badge primitive with variants and render composition.",
+      "files": ["packages/ui/src/components/badge.tsx"]
+    },
+    {
+      "name": "badge-overflow",
+      "type": "registry:ui",
+      "title": "Badge Overflow",
+      "description": "Measure available space and collapse overflowing badges into a count indicator.",
+      "registryDependencies": ["badge"],
+      "files": [
+        "packages/ui/src/components/badge-overflow.tsx",
+        "packages/ui/src/lib/compose-refs.ts"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Shadcn breadcrumb primitives for page hierarchy navigation.",
+      "files": ["packages/ui/src/components/breadcrumb.tsx"]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Shadcn button primitive with variants, sizes, and asChild composition.",
+      "files": ["packages/ui/src/components/button.tsx"]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "Group related buttons and controls with shared edges.",
+      "registryDependencies": ["button"],
+      "files": ["packages/ui/src/components/button-group.tsx"]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Layered card and card frame primitives for grouped content.",
+      "files": ["packages/ui/src/components/card.tsx"]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Date picker calendar primitive for Base UI popovers.",
+      "dependencies": ["react-day-picker", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": ["packages/ui/src/components/calendar.tsx"]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Accessible checkbox built on Base UI.",
+      "files": ["packages/ui/src/components/checkbox.tsx"]
+    },
+    {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "title": "Checkbox Group",
+      "description": "Layout primitives for grouped checkbox choices.",
+      "registryDependencies": ["checkbox"],
+      "files": ["packages/ui/src/components/checkbox-group.tsx"]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Disclosure primitives for showing and hiding sections of content.",
+      "files": ["packages/ui/src/components/collapsible.tsx"]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Command menu primitives powered by cmdk.",
+      "dependencies": ["cmdk", "lucide-react"],
+      "registryDependencies": ["dialog"],
+      "files": ["packages/ui/src/components/command.tsx"]
+    },
+    {
+      "name": "data-grid",
+      "type": "registry:ui",
+      "title": "Data Grid",
+      "description": "Spreadsheet-style editable grid with Base UI overlays, keyboard navigation, paste support, search, resizing, and pinned columns.",
+      "dependencies": [
+        "@tanstack/react-table",
+        "@tanstack/react-virtual",
+        "cmdk",
+        "lucide-react",
+        "react-day-picker",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "calendar",
+        "checkbox",
+        "command",
+        "dialog",
+        "dropdown-menu",
+        "input",
+        "kbd",
+        "popover",
+        "select",
+        "separator",
+        "skeleton",
+        "textarea",
+        "tooltip"
+      ],
+      "files": [
+        "packages/ui/src/components/data-grid/index.ts",
+        "packages/ui/src/components/data-grid/data-grid.tsx",
+        "packages/ui/src/components/data-grid/data-grid-cell.tsx",
+        "packages/ui/src/components/data-grid/data-grid-cell-variants.tsx",
+        "packages/ui/src/components/data-grid/data-grid-cell-wrapper.tsx",
+        "packages/ui/src/components/data-grid/data-grid-column-header.tsx",
+        "packages/ui/src/components/data-grid/data-grid-context-menu.tsx",
+        "packages/ui/src/components/data-grid/data-grid-keyboard-shortcuts.tsx",
+        "packages/ui/src/components/data-grid/data-grid-paste-dialog.tsx",
+        "packages/ui/src/components/data-grid/data-grid-row.tsx",
+        "packages/ui/src/components/data-grid/data-grid-search.tsx",
+        "packages/ui/src/hooks/use-data-grid.ts",
+        "packages/ui/src/hooks/use-as-ref.ts",
+        "packages/ui/src/hooks/use-badge-overflow.ts",
+        "packages/ui/src/hooks/use-callback-ref.ts",
+        "packages/ui/src/hooks/use-debounced-callback.ts",
+        "packages/ui/src/hooks/use-isomorphic-layout-effect.ts",
+        "packages/ui/src/hooks/use-lazy-ref.ts",
+        "packages/ui/src/lib/compose-refs.ts",
+        "packages/ui/src/lib/data-grid.ts",
+        "packages/ui/src/lib/data-grid-types.ts"
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "TanStack data table shell with Base UI controls for sorting, visibility, and pagination.",
+      "dependencies": ["@tanstack/react-table", "lucide-react"],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "dropdown-menu",
+        "input",
+        "select",
+        "table"
+      ],
+      "files": ["packages/ui/src/components/data-table.tsx"]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Base UI menu primitives styled with Shadcn defaults.",
+      "files": ["packages/ui/src/components/dropdown-menu.tsx"]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog primitives built on Base UI.",
+      "registryDependencies": ["button", "input"],
+      "files": ["packages/ui/src/components/dialog.tsx"]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Shadcn field primitives for composing accessible form layouts.",
+      "registryDependencies": ["label", "separator"],
+      "files": ["packages/ui/src/components/field.tsx"]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Styled input control for forms.",
+      "files": ["packages/ui/src/components/input.tsx"]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Styled multiline text control for forms.",
+      "files": ["packages/ui/src/components/textarea.tsx"]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "Input wrappers with addons, buttons, and helper text.",
+      "registryDependencies": ["button", "input", "textarea"],
+      "files": ["packages/ui/src/components/input-group.tsx"]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "Flexible item layout primitive for media, content, and actions.",
+      "files": ["packages/ui/src/components/item.tsx"]
+    },
+    {
+      "name": "key-value",
+      "type": "registry:ui",
+      "title": "Key Value",
+      "description": "Display and edit groups of key/value pairs with masked value controls.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "input", "input-group"],
+      "files": ["packages/ui/src/components/key-value.tsx"]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Shadcn keyboard key primitives for shortcuts and commands.",
+      "files": ["packages/ui/src/components/kbd.tsx"]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Shadcn label primitive used by field and form controls.",
+      "files": ["packages/ui/src/components/label.tsx"]
+    },
+    {
+      "name": "mini-calendar",
+      "type": "registry:ui",
+      "title": "Mini Calendar",
+      "description": "Composable mini calendar for picking dates close to today.",
+      "registryDependencies": ["button"],
+      "files": ["packages/ui/src/components/mini-calendar.tsx"]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Base UI popover primitives styled with Shadcn defaults.",
+      "files": ["packages/ui/src/components/popover.tsx"]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Accessible single-choice radio group built on Base UI.",
+      "files": ["packages/ui/src/components/radio-group.tsx"]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Base UI select primitives styled with Shadcn defaults.",
+      "files": ["packages/ui/src/components/select.tsx"]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Shadcn separator primitive for horizontal and vertical dividers.",
+      "files": ["packages/ui/src/components/separator.tsx"]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "A composable collapsible application sidebar with desktop, mobile, and icon states.",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": [
+        "button",
+        "input",
+        "separator",
+        "skeleton",
+        "tooltip"
+      ],
+      "files": [
+        "packages/ui/src/components/sidebar.tsx",
+        "packages/ui/src/hooks/use-mobile.ts"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Placeholder loading primitive with pulse animation.",
+      "files": ["packages/ui/src/components/skeleton.tsx"]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "Shadcn toaster component built on Sonner.",
+      "dependencies": ["sonner", "next-themes"],
+      "files": ["packages/ui/src/components/sonner.tsx"]
+    },
+    {
+      "name": "status",
+      "type": "registry:ui",
+      "title": "Status",
+      "description": "Status indicator for service uptime and health states.",
+      "files": ["packages/ui/src/components/status.tsx"]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Accessible step-by-step navigation with horizontal and vertical layouts.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        "packages/ui/src/components/stepper.tsx",
+        "packages/ui/src/hooks/use-as-ref.ts",
+        "packages/ui/src/hooks/use-isomorphic-layout-effect.ts",
+        "packages/ui/src/hooks/use-lazy-ref.ts",
+        "packages/ui/src/lib/compose-refs.ts"
+      ]
+    },
+    {
+      "name": "theme-switcher",
+      "type": "registry:ui",
+      "title": "Theme Switcher",
+      "description": "Control for switching between light, dark, and system themes.",
+      "registryDependencies": ["button"],
+      "files": ["packages/ui/src/components/theme-switcher.tsx"]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Accessible toggle control built on Base UI.",
+      "files": ["packages/ui/src/components/switch.tsx"]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Styled table primitives for dense, scannable data.",
+      "files": ["packages/ui/src/components/table.tsx"]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Base UI tabs primitives styled with Shadcn defaults.",
+      "files": ["packages/ui/src/components/tabs.tsx"]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Base UI tooltip primitives styled with Shadcn defaults.",
+      "files": ["packages/ui/src/components/tooltip.tsx"]
+    },
+    {
+      "name": "pattern-item-interactive-link",
+      "type": "registry:component",
+      "title": "Item as Link",
+      "description": "Item pattern for internal and external links.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["item"],
+      "files": ["apps/docs/examples/pattern-item-interactive-link.tsx"]
+    },
+    {
+      "name": "pattern-item-interactive-dropdown",
+      "type": "registry:component",
+      "title": "Item in Dropdown",
+      "description": "Item pattern inside a dropdown menu.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dropdown-menu", "item"],
+      "files": ["apps/docs/examples/pattern-item-interactive-dropdown.tsx"]
+    },
+    {
+      "name": "pattern-item-layout-sizes",
+      "type": "registry:component",
+      "title": "Item Sizes",
+      "description": "Item pattern showing default and small layouts.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "item"],
+      "files": ["apps/docs/examples/pattern-item-layout-sizes.tsx"]
+    },
+    {
+      "name": "pattern-item-layout-group",
+      "type": "registry:component",
+      "title": "Item Group",
+      "description": "Grouped item list with separators and actions.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "item"],
+      "files": ["apps/docs/examples/pattern-item-layout-group.tsx"]
+    },
+    {
+      "name": "pattern-item-layout-header",
+      "type": "registry:component",
+      "title": "Item with Header",
+      "description": "Item grid with media headers.",
+      "registryDependencies": ["item"],
+      "files": ["apps/docs/examples/pattern-item-layout-header.tsx"]
+    },
+    {
+      "name": "pattern-item-media-icon",
+      "type": "registry:component",
+      "title": "Item with Icon Media",
+      "description": "Item pattern with icon media and an action.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "item"],
+      "files": ["apps/docs/examples/pattern-item-media-icon.tsx"]
+    },
+    {
+      "name": "pattern-item-media-avatar",
+      "type": "registry:component",
+      "title": "Item with Avatar",
+      "description": "Item pattern with avatar media.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "item"],
+      "files": ["apps/docs/examples/pattern-item-media-avatar.tsx"]
+    },
+    {
+      "name": "pattern-item-media-image",
+      "type": "registry:component",
+      "title": "Item with Image Media",
+      "description": "Item pattern for compact media rows.",
+      "registryDependencies": ["item"],
+      "files": ["apps/docs/examples/pattern-item-media-image.tsx"]
+    },
+    {
+      "name": "pattern-item-standard-basic",
+      "type": "registry:component",
+      "title": "Basic Item",
+      "description": "Basic item pattern with an action.",
+      "registryDependencies": ["button", "item"],
+      "files": ["apps/docs/examples/pattern-item-standard-basic.tsx"]
+    },
+    {
+      "name": "pattern-item-standard-media-icon",
+      "type": "registry:component",
+      "title": "Item with Media and Icon",
+      "description": "Compact item pattern with media and trailing icon.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["item"],
+      "files": ["apps/docs/examples/pattern-item-standard-media-icon.tsx"]
+    },
+    {
+      "name": "pattern-quota-usage-card",
+      "type": "registry:component",
+      "title": "Quota Usage Card",
+      "description": "Compact quota usage card with circular gauges and metric rows.",
+      "registryDependencies": ["card", "item"],
+      "files": ["apps/docs/examples/pattern-quota-usage-card.tsx"]
+    },
+    {
+      "name": "pattern-environment-variable-editor",
+      "type": "registry:component",
+      "title": "Environment Variable Editor",
+      "description": "Editable environment variable card with masked secrets, add, remove, save, and cancel behavior.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "card", "key-value"],
+      "files": ["apps/docs/examples/pattern-environment-variable-editor.tsx"]
+    }
+  ]
+}

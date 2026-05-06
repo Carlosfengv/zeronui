@@ -1,0 +1,41 @@
+---
+title: Breadcrumb
+description: Shadcn breadcrumb primitives for page hierarchy navigation.
+icon: Route
+dependencies:
+  - https://ui.shadcn.com/docs/components/breadcrumb
+installer: breadcrumb
+---
+
+## Usage
+
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@zeron-ui/ui/breadcrumb";
+
+export function Example() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Components</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+```
+
+## Examples
+
+<Preview path="breadcrumb" />

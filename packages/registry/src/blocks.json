@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "zeron-ui-blocks",
+  "homepage": "https://zeron-ui.local/blocks",
+  "items": [
+    {
+      "name": "user-app-layout",
+      "type": "registry:block",
+      "title": "User App Layout",
+      "description": "A collapsible application layout with nested navigation, project actions, and user menus.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "avatar",
+        "breadcrumb",
+        "collapsible",
+        "dropdown-menu",
+        "separator",
+        "sidebar"
+      ],
+      "files": [
+        {
+          "path": "examples/user-app-layout.tsx",
+          "type": "registry:block",
+          "target": "components/user-app-layout.tsx"
+        }
+      ]
+    }
+  ]
+}

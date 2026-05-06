@@ -1,0 +1,31 @@
+---
+title: Key Value
+description: Display and edit groups of key/value pairs with optional masked values.
+icon: ListTree
+dependencies:
+  - https://tailwindcss.com/
+installer: key-value
+---
+
+## Usage
+
+```tsx
+import { KeyValue, type KeyValueItem } from "@zeron-ui/ui/key-value";
+
+const items: KeyValueItem[] = [
+  {
+    id: "database-url",
+    key: "DATABASE_URL",
+    masked: true,
+    value: "postgres://production.internal/app",
+  },
+];
+
+export function Example() {
+  return <KeyValue editing items={items} onItemsChange={() => {}} />;
+}
+```
+
+## Examples
+
+<Preview path="key-value" />

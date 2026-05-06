@@ -1,0 +1,39 @@
+---
+title: Item Patterns
+description: Item patterns compose compact rows with content, media, and actions for repeated product UI.
+icon: Rows3
+installer: pattern-item-standard-basic
+---
+
+Item patterns compose the base `Item` primitives with actions, media, grouped layouts, and interactive wrappers. Use them when a surface needs to present one compact object with optional supporting content and a clear next action.
+
+## When to Use
+
+Use Item patterns for repeated rows in settings pages, account switchers, command menus, dropdown menus, notifications, compact cards, media lists, and object pickers.
+
+Prefer an Item pattern when the content is too structured for a plain link or button, but too small to justify a full card. It should usually represent one entity, destination, or action.
+
+## Composition
+
+An Item pattern is built from:
+
+- `Item`: the outer row or card-like container.
+- `ItemContent`: title and description content.
+- `ItemActions`: trailing actions such as buttons, chevrons, or menus.
+- Optional `ItemMedia`, `ItemGroup`, and `ItemSeparator` can be added when the product surface needs avatars, icons, images, or grouped rows.
+
+## Install
+
+```bash
+npx shadcn@latest add @zeron-ui/pattern-item-standard-basic
+```
+
+## Behavior
+
+Use the standard Item pattern as the default starting point when a row needs a title, optional description, and optional action. The whole row should stay compact, scannable, and predictable across repeated lists.
+
+Use `asChild` when the entire item should behave as a link. Keep trailing buttons or icons inside `ItemActions` so repeated rows remain aligned.
+
+## Related Variants
+
+Create separate MDX pattern pages when a variant becomes a distinct reusable component. Examples: item links, item dropdown rows, media items, and grouped item lists.

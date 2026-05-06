@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "title": "Patterns",
+  "pages": [
+    "index",
+    "---Item---",
+    "item",
+    "---Environment---",
+    "environment",
+    "---Quota---",
+    "quota"
+  ]
+}

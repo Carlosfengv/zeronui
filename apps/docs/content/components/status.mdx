@@ -1,0 +1,31 @@
+---
+title: Status
+description: Zeron UI status indicator for service uptime and health states.
+icon: Radio
+installer: status
+---
+
+## Usage
+
+```tsx
+import { Status, StatusIndicator, StatusLabel } from "@zeron-ui/ui/status";
+
+export function Example() {
+  return (
+    <Status status="online">
+      <StatusIndicator />
+      <StatusLabel />
+    </Status>
+  );
+}
+```
+
+## Examples
+
+### States
+
+<Preview path="status" />
+
+### Custom styles
+
+<Preview path="status-custom" />

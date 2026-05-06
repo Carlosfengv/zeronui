@@ -1,0 +1,34 @@
+---
+title: Dropdown Menu
+description: Base UI menu primitives styled with Shadcn defaults.
+icon: Menu
+dependencies:
+  - https://base-ui.com/react/components/menu
+installer: dropdown-menu
+---
+
+## Usage
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@zeron-ui/ui/dropdown-menu";
+
+export function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+## Examples
+
+<Preview path="dropdown-menu" />

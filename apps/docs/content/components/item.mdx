@@ -1,0 +1,35 @@
+---
+title: Item
+description: Flexible item layout primitive for media, content, and actions.
+icon: Rows3
+dependencies:
+  - https://tailwindcss.com/
+  - https://ui.shadcn.com/docs/components/item
+installer: item
+---
+
+## Usage
+
+```tsx
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from "@zeron-ui/ui/item";
+
+export function Example() {
+  return (
+    <Item>
+      <ItemContent>
+        <ItemTitle>Title</ItemTitle>
+        <ItemDescription>Description</ItemDescription>
+      </ItemContent>
+    </Item>
+  );
+}
+```
+
+## Examples
+
+<Preview path="item" />

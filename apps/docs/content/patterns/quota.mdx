@@ -1,0 +1,35 @@
+---
+title: Quota Patterns
+description: Quota patterns show plan limits, usage progress, and remaining cycle context in compact account surfaces.
+icon: Gauge
+installer: pattern-quota-usage-card
+---
+
+Quota patterns compose `Card` and `Item` primitives into a compact usage summary. Use them for billing pages, usage popovers, project settings, account menus, and dashboards that need to show several quota lines at once.
+
+## When to Use
+
+Use Quota when people need to scan current usage against plan limits without opening a full analytics view.
+
+Prefer this pattern for short quota lists with stable labels and machine-like values. If the data needs comparisons, history, filtering, or drill-down charts, use a dashboard or table pattern instead.
+
+## Composition
+
+A Quota pattern is built from:
+
+- `Card`: the outer summary surface.
+- `CardHeader` and `CardTitle`: cycle or billing context.
+- `ItemGroup`: the compact list of quota rows.
+- `Item`, `ItemMedia`, `ItemContent`, and `ItemActions`: each metric row, with a gauge, label, and value.
+
+## Install
+
+```bash
+npx shadcn@latest add @zeron-ui/pattern-quota-usage-card
+```
+
+## Behavior
+
+Keep each row compact and scannable. The label should describe the quota, while the trailing value should use tabular numerals for stable alignment.
+
+Use a small gauge or progress cue only as a supporting signal. The exact value should remain visible as text so the pattern works for assistive technology, screenshots, and dense settings pages.

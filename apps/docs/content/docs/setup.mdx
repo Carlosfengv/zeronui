@@ -1,0 +1,33 @@
+---
+title: Setup
+description: Install dependencies and start the Zeron UI documentation app.
+icon: Terminal
+---
+
+## Install
+
+```bash
+pnpm install
+```
+
+## Run docs
+
+```bash
+pnpm dev
+```
+
+The docs app runs from `apps/docs`. Component source is imported from `packages/ui`.
+
+## Styles
+
+The component library theme is defined in `packages/ui/src/styles.css` and exported as `@zeron-ui/ui/styles.css`.
+
+The docs app imports that stylesheet from `apps/docs/app/global.css`, then maps Fumadocs variables to the same semantic tokens. Update component-library variables in `packages/ui`; the docs site should follow them.
+
+## Add a component
+
+1. Add source to `packages/ui/src/components/{name}.tsx`.
+2. Export it from `packages/ui/src/index.ts`.
+3. Add a demo to `apps/docs/examples/{name}.tsx`.
+4. Add MDX to `apps/docs/content/components/{name}.mdx`.
+5. Add registry metadata in `packages/registry/src/components.json`.

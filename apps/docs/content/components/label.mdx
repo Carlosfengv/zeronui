@@ -1,0 +1,28 @@
+---
+title: Label
+description: Shadcn label primitive for associating text with form controls.
+icon: TextCursorInput
+dependencies:
+  - https://ui.shadcn.com/docs/components/label
+installer: label
+---
+
+## Usage
+
+```tsx
+import { Input } from "@zeron-ui/ui/input";
+import { Label } from "@zeron-ui/ui/label";
+
+export function Example() {
+  return (
+    <div className="grid gap-2">
+      <Label htmlFor="email">Email</Label>
+      <Input id="email" placeholder="hello@example.com" type="email" />
+    </div>
+  );
+}
+```
+
+## Examples
+
+<Preview path="label" />

@@ -1,0 +1,32 @@
+---
+title: Input Group
+description: Add addons, buttons, and helper content to inputs.
+icon: ScanLine
+dependencies:
+  - https://tailwindcss.com/
+  - https://ui.shadcn.com/docs/components/input-group
+installer: input-group
+---
+
+## Usage
+
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@zeron-ui/ui/input-group";
+
+export function Example() {
+  return (
+    <InputGroup>
+      <InputGroupInput placeholder="Search..." />
+      <InputGroupAddon>⌘K</InputGroupAddon>
+    </InputGroup>
+  );
+}
+```
+
+## Examples
+
+<Preview path="input-group" />

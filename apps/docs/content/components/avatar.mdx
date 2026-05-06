@@ -1,0 +1,23 @@
+---
+title: Avatar
+description: Image and fallback primitives for user identity.
+icon: CircleUserRound
+dependencies:
+  - https://base-ui.com/react/components/avatar
+installer: avatar
+---
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@zeron-ui/ui/avatar";
+
+export function Example() {
+  return (
+    <Avatar>
+      <AvatarImage alt="User" src="/avatars/shadcn.jpg" />
+      <AvatarFallback>UI</AvatarFallback>
+    </Avatar>
+  );
+}
+```

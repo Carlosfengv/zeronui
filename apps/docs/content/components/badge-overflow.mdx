@@ -1,0 +1,42 @@
+---
+title: Badge Overflow
+description: Measure available space and collapse overflowing badges into a count indicator.
+icon: Tags
+dependencies:
+  - https://www.diceui.com/docs/components/radix/badge-overflow
+installer: badge-overflow
+---
+
+## Usage
+
+```tsx
+import { Badge } from "@zeron-ui/ui/badge";
+import { BadgeOverflow } from "@zeron-ui/ui/badge-overflow";
+
+export function Example() {
+  return (
+    <BadgeOverflow
+      items={["React", "TypeScript", "Next.js"]}
+      renderBadge={(_, label) => <Badge>{label}</Badge>}
+    />
+  );
+}
+```
+
+## Object Items
+
+```tsx
+<BadgeOverflow
+  items={[
+    { id: 1, name: "React" },
+    { id: 2, name: "TypeScript" },
+  ]}
+  getBadgeLabel={(item) => item.name}
+  getBadgeKey={(item) => item.id}
+  renderBadge={(_, label) => <Badge>{label}</Badge>}
+/>
+```
+
+## Examples
+
+<Preview path="badge-overflow" />

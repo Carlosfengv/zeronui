@@ -1,0 +1,114 @@
+@import "tailwindcss";
+@import "@zeron-ui/ui/styles.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "tw-animate-css";
+
+@source "../node_modules/fumadocs-ui/dist/**/*.js";
+@source "../../../packages/ui/src/**/*.{js,jsx,ts,tsx}";
+@source "./**/*.{js,jsx,ts,tsx,mdx}";
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+:root {
+  --nav-height: 61px;
+  --color-fd-background: var(--background);
+  --color-fd-primary: var(--primary);
+  --color-fd-border: var(--border);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-ring: var(--ring);
+  --fd-nav-height: calc(var(--spacing) * 14);
+  --fd-layout-width: 100%;
+  --fd-sidebar-width: 240px;
+  --fd-toc-width: 240px;
+  --fd-banner-height: var(--nav-height);
+}
+
+#nd-docs-layout {
+  width: 100%;
+  max-width: 100vw;
+}
+
+#nd-page {
+  margin-top: calc(var(--nav-height) - 19px);
+}
+
+#nd-page h1,
+#nd-page h2,
+#nd-page h3 {
+  @apply tracking-tight;
+}
+
+#nd-page figure.shiki {
+  --tw-shadow: 0 0 #0000;
+  box-shadow: none;
+}
+
+.landing-page #nd-docs-layout {
+  --fd-sidebar-width: 0px;
+  @apply pl-0!;
+}
+
+.landing-page #nd-sidebar {
+  @apply hidden;
+}
+
+.patterns-page #nd-docs-layout,
+.blocks-page #nd-docs-layout {
+  --fd-sidebar-width: 0px;
+  grid-template:
+    "header" var(--fd-docs-row-1)
+    "toc-popover" 0px
+    "main" 1fr / minmax(0, 1fr) !important;
+  @apply pl-0!;
+}
+
+.patterns-page #nd-sidebar,
+.patterns-page [data-sidebar-placeholder],
+.patterns-page [data-sidebar-panel],
+.blocks-page #nd-sidebar,
+.blocks-page [data-sidebar-placeholder],
+.blocks-page [data-sidebar-panel] {
+  display: none !important;
+}
+
+.patterns-page #nd-page,
+.blocks-page #nd-page {
+  grid-area: main;
+  margin-top: 0;
+  min-width: 0;
+  @apply max-w-none!;
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}

@@ -1,0 +1,27 @@
+---
+title: Checkbox Group
+description: Layout primitives for grouped checkbox choices.
+icon: ListChecks
+dependencies:
+  - https://ui.shadcn.com/docs/components/checkbox
+installer: checkbox-group
+---
+
+## Usage
+
+```tsx
+import { CheckboxGroup, CheckboxGroupItem } from "@zeron-ui/ui/checkbox-group";
+
+export function Example() {
+  return (
+    <CheckboxGroup>
+      <CheckboxGroupItem id="one">Option One</CheckboxGroupItem>
+      <CheckboxGroupItem id="two">Option Two</CheckboxGroupItem>
+    </CheckboxGroup>
+  );
+}
+```
+
+## Examples
+
+<Preview path="checkbox-group" />

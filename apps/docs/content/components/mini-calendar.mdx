@@ -1,0 +1,50 @@
+---
+title: Mini Calendar
+description: A composable Zeron UI mini calendar component for picking dates close to today.
+icon: Calendar
+dependencies:
+  - https://lucide.dev/
+  - https://date-fns.org/
+installer: mini-calendar
+---
+
+## Usage
+
+```tsx
+import {
+  MiniCalendar,
+  MiniCalendarDay,
+  MiniCalendarDays,
+  MiniCalendarNavigation,
+} from "@zeron-ui/ui/mini-calendar";
+
+export function Example() {
+  return (
+    <MiniCalendar>
+      <MiniCalendarNavigation direction="prev" />
+      <MiniCalendarDays>
+        {(date) => <MiniCalendarDay date={date} key={date.toISOString()} />}
+      </MiniCalendarDays>
+      <MiniCalendarNavigation direction="next" />
+    </MiniCalendar>
+  );
+}
+```
+
+## Examples
+
+### Basic Usage
+
+<Preview path="mini-calendar" />
+
+### Controlled
+
+<Preview path="mini-calendar-controlled" />
+
+### Custom Layout
+
+<Preview path="mini-calendar-custom" />
+
+### Seven Days
+
+<Preview path="mini-calendar-days" />

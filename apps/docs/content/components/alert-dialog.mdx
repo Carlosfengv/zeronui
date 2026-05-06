@@ -1,0 +1,48 @@
+---
+title: Alert Dialog
+description: Modal confirmation dialog primitives built on Base UI.
+icon: OctagonAlert
+dependencies:
+  - https://base-ui.com/react/components/alert-dialog
+installer: alert-dialog
+---
+
+## Usage
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@zeron-ui/ui/alert-dialog";
+
+export function Example() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>Delete</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+```
+
+## Examples
+
+<Preview path="alert-dialog" />

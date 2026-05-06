@@ -1,0 +1,35 @@
+---
+title: Environment Patterns
+description: Environment patterns provide compact editing surfaces for deployment variables, secrets, and project configuration.
+icon: Settings2
+installer: pattern-environment-variable-editor
+---
+
+Environment patterns compose `Card`, `Input`, and `Button` primitives into a deploy-settings surface for teams that need to review and edit runtime configuration without leaving context.
+
+## When to Use
+
+Use Environment when people need to scan key/value configuration, reveal individual secrets, and make small edits before deploying.
+
+Prefer this pattern for project settings, deployment dashboards, environment switchers, and admin tools. If the data needs bulk imports, audit history, or permission approvals, pair it with a larger table or workflow.
+
+## Composition
+
+An Environment pattern is built from:
+
+- `Card`: the outer settings surface.
+- `CardHeader`, `CardTitle`, and `CardDescription`: environment scope and variable count.
+- `Input`: editable variable names and values.
+- `Button`: edit, cancel, save, reveal, add, remove, and deploy actions.
+
+## Install
+
+```bash
+npx shadcn@latest add @zeron-ui/pattern-environment-variable-editor
+```
+
+## Behavior
+
+Keep the default state compact and scannable. Entering edit mode should preserve the last saved values in a draft, let users add or remove rows, and allow canceling without mutating the saved list.
+
+Masked secrets should stay hidden by default and reveal one row at a time. Normalize variable names on save so pasted labels remain deployment-friendly.

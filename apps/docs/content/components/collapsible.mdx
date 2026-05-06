@@ -1,0 +1,27 @@
+---
+title: Collapsible
+description: Disclosure primitives for showing and hiding sections of content.
+icon: ChevronsUpDown
+dependencies:
+  - https://base-ui.com/react/components/collapsible
+installer: collapsible
+---
+
+## Usage
+
+```tsx
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@zeron-ui/ui/collapsible";
+
+export function Example() {
+  return (
+    <Collapsible>
+      <CollapsibleTrigger>Toggle</CollapsibleTrigger>
+      <CollapsibleContent>Content</CollapsibleContent>
+    </Collapsible>
+  );
+}
+```

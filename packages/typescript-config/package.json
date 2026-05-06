@@ -1,0 +1,10 @@
+{
+  "name": "@zeron-ui/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "base.json",
+    "nextjs.json"
+  ]
+}

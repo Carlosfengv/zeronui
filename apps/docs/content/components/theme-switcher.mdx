@@ -1,0 +1,29 @@
+---
+title: Theme Switcher
+description: Zeron UI control for switching between light, dark, and system themes.
+icon: Moon
+dependencies:
+  - https://motion.dev/
+  - https://lucide.dev/
+installer: theme-switcher
+---
+
+## Usage
+
+```tsx
+import { ThemeSwitcher } from "@zeron-ui/ui/theme-switcher";
+
+export function Example() {
+  return <ThemeSwitcher defaultValue="system" />;
+}
+```
+
+## Examples
+
+### Controlled
+
+<Preview path="theme-switcher" />
+
+### Uncontrolled
+
+<Preview path="theme-switcher-uncontrolled" />
