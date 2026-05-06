@@ -1,5 +1,12 @@
 {
   "root": true,
   "title": "Docs",
-  "pages": ["---Overview---", "index", "setup", "architecture", "philosophy"]
+  "pages": [
+    "---Overview---",
+    "index",
+    "setup",
+    "style-variables",
+    "architecture",
+    "philosophy"
+  ]
 }

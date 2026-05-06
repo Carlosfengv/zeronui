@@ -1,0 +1,274 @@
+---
+title: Style Variables
+description: Theme variables and global style structure used by Zeron UI.
+icon: Palette
+---
+
+## Source files
+
+Zeron UI uses two style entry points:
+
+| File | Responsibility |
+| --- | --- |
+| `packages/ui/src/styles.css` | Component library theme variables, Tailwind v4 theme mapping, custom variants, shared utilities |
+| `apps/docs/app/global.css` | Docs app global imports, Fumadocs token bridge, layout variables, base page styles |
+
+The component library theme source is `packages/ui/src/styles.css`. The docs app imports it through `@zeron-ui/ui/styles.css`, then maps Fumadocs variables back to the same semantic tokens.
+
+## Import order
+
+`apps/docs/app/global.css` loads styles in this order:
+
+```css
+@import "tailwindcss";
+@import "@zeron-ui/ui/styles.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "tw-animate-css";
+```
+
+The docs app also scans component source and MDX content for Tailwind classes:
+
+```css
+@source "../../../packages/ui/src/**/*.{js,jsx,ts,tsx}";
+@source "./**/*.{js,jsx,ts,tsx,mdx}";
+```
+
+## Tailwind theme mapping
+
+`packages/ui/src/styles.css` uses Tailwind CSS v4 `@theme inline` to expose CSS variables as Tailwind tokens.
+
+### Font tokens
+
+| Tailwind token | CSS variable | Default value |
+| --- | --- | --- |
+| `--font-sans` | `--font-sans` | `Geist, ui-sans-serif, system-ui, sans-serif` |
+| `--font-mono` | `--font-mono` | `"Geist Mono", ui-monospace, SFMono-Regular, monospace` |
+
+### Color tokens
+
+| Tailwind token | CSS variable | Meaning |
+| --- | --- | --- |
+| `--color-background` | `--background` | Default page background |
+| `--color-foreground` | `--foreground` | Default text and icon color |
+| `--color-card` | `--card` | Card or panel background |
+| `--color-card-foreground` | `--card-foreground` | Card or panel foreground |
+| `--color-popover` | `--popover` | Floating layer background |
+| `--color-popover-foreground` | `--popover-foreground` | Floating layer foreground |
+| `--color-primary` | `--primary` | Primary action or emphasis |
+| `--color-primary-foreground` | `--primary-foreground` | Foreground on primary surfaces |
+| `--color-secondary` | `--secondary` | Secondary action or soft surface |
+| `--color-secondary-foreground` | `--secondary-foreground` | Foreground on secondary surfaces |
+| `--color-muted` | `--muted` | Muted surface |
+| `--color-muted-foreground` | `--muted-foreground` | Secondary text or muted icon color |
+| `--color-accent` | `--accent` | Hover, active, menu highlight, selected row |
+| `--color-accent-foreground` | `--accent-foreground` | Foreground on accent surfaces |
+| `--color-destructive` | `--destructive` | Error, delete, destructive action |
+| `--color-border` | `--border` | Default border |
+| `--color-input` | `--input` | Form control border or background |
+| `--color-ring` | `--ring` | Focus ring |
+| `--color-chart-1` to `--color-chart-5` | `--chart-1` to `--chart-5` | Default chart palette |
+
+Use semantic classes in components:
+
+```tsx
+<div className="bg-background text-foreground" />
+<button className="bg-primary text-primary-foreground" />
+<div className="border-border ring-ring" />
+```
+
+### Radius tokens
+
+| Tailwind token | Calculation | Typical use |
+| --- | --- | --- |
+| `--radius-sm` | `calc(var(--radius) - 4px)` | Small controls and labels |
+| `--radius-md` | `calc(var(--radius) - 2px)` | Inputs and buttons |
+| `--radius-lg` | `var(--radius)` | Cards, panels, dialogs |
+| `--radius-xl` | `calc(var(--radius) + 4px)` | Large containers |
+
+Base value:
+
+```css
+:root {
+  --radius: 0.625rem;
+}
+```
+
+## Theme variables
+
+Zeron UI uses `:root` for the default light theme and `.dark` to override the same variables for dark mode.
+
+### Surfaces
+
+| Variable | Light | Dark | Meaning |
+| --- | --- | --- | --- |
+| `--background` | `oklch(1 0 0)` | `oklch(0.141 0.005 285.823)` | Page background |
+| `--foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` | Page foreground |
+| `--card` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | Card background |
+| `--card-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Card foreground |
+| `--popover` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | Popover background |
+| `--popover-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Popover foreground |
+
+### Actions and states
+
+| Variable | Light | Dark | Meaning |
+| --- | --- | --- | --- |
+| `--primary` | `oklch(10.511% 0.02984 250.114)` | `oklch(0.92 0.004 286.32)` | Primary action background |
+| `--primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Foreground on primary |
+| `--secondary` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | Secondary action or soft surface |
+| `--secondary-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Foreground on secondary |
+| `--accent` | `oklch(91.405% 0.01811 261.4 / 0.25)` | `oklch(0.274 0.006 286.033)` | Hover, active, highlighted item |
+| `--accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Foreground on accent |
+| `--destructive` | `oklch(0.577 0.245 27.325)` | `oklch(0.704 0.191 22.216)` | Destructive or error state |
+
+`--destructive-foreground` is not currently defined. If solid destructive buttons are needed, add this variable in both `:root` and `.dark`, then expose it in `@theme inline`.
+
+### Muted, border, input, ring
+
+| Variable | Light | Dark | Meaning |
+| --- | --- | --- | --- |
+| `--muted` | `oklch(91.405% 0.01811 261.4 / 0.8)` | `oklch(0.274 0.006 286.033)` | Muted background |
+| `--muted-foreground` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` | Supporting text |
+| `--border` | `oklch(34.567% 0.02551 269.635 / 0.12)` | `oklch(1 0 0 / 10%)` | Default border |
+| `--input` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 15%)` | Form control border or fill |
+| `--ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | Focus ring |
+
+### Chart palette
+
+| Variable | Light | Dark |
+| --- | --- | --- |
+| `--chart-1` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` |
+| `--chart-2` | `oklch(0.442 0.017 285.786)` | `oklch(0.552 0.016 285.938)` |
+| `--chart-3` | `oklch(0.37 0.013 285.805)` | `oklch(0.442 0.017 285.786)` |
+| `--chart-4` | `oklch(0.274 0.006 286.033)` | `oklch(0.37 0.013 285.805)` |
+| `--chart-5` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` |
+
+The current chart palette is neutral and low saturation. For charts that need stronger series distinction, add product-specific chart tokens instead of changing the base palette casually.
+
+### Sidebar tokens
+
+| Variable | Light | Dark | Meaning |
+| --- | --- | --- | --- |
+| `--sidebar` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Sidebar background |
+| `--sidebar-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Sidebar foreground |
+| `--sidebar-primary` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` | Sidebar primary emphasis |
+| `--sidebar-primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Foreground on sidebar primary |
+| `--sidebar-accent` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | Sidebar hover or active background |
+| `--sidebar-accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Sidebar hover or active foreground |
+| `--sidebar-border` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 10%)` | Sidebar border |
+| `--sidebar-ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | Sidebar focus ring |
+
+## Custom variants
+
+`styles.css` defines Tailwind custom variants for common component states.
+
+| Variant | Matches | Use |
+| --- | --- | --- |
+| `dark` | `&:is(.dark *)` | Dark mode |
+| `data-open` | `[data-state="open"]` or active `[data-open]` | Open state |
+| `data-closed` | `[data-state="closed"]` or active `[data-closed]` | Closed state |
+| `data-checked` | `[data-state="checked"]` or active `[data-checked]` | Checked state |
+| `data-disabled` | `[data-disabled="true"]` or active `[data-disabled]` | Disabled state |
+| `data-active` | `[data-state="active"]` or active `[data-active]` | Active state |
+
+Example:
+
+```tsx
+<button className="data-active:bg-accent data-disabled:opacity-50" />
+```
+
+## Animation tokens
+
+The theme defines two accordion keyframes:
+
+| Keyframes | Direction | Height source |
+| --- | --- | --- |
+| `accordion-down` | Expand | `--radix-accordion-content-height`, fallback `--accordion-panel-height` |
+| `accordion-up` | Collapse | `--radix-accordion-content-height`, fallback `--accordion-panel-height` |
+
+This supports Radix Accordion while still allowing non-Radix accordion-like components to opt in through `--accordion-panel-height`.
+
+## Shared utility
+
+`styles.css` defines `no-scrollbar`:
+
+```css
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+```
+
+Use it when a region should remain scrollable while hiding the browser scrollbar, such as horizontal tabs or chip lists.
+
+## Docs app variables
+
+`apps/docs/app/global.css` defines docs-specific layout variables:
+
+| Variable | Value | Meaning |
+| --- | --- | --- |
+| `--nav-height` | `61px` | Custom nav height |
+| `--fd-nav-height` | `calc(var(--spacing) * 14)` | Fumadocs nav height |
+| `--fd-layout-width` | `100%` | Docs layout width |
+| `--fd-sidebar-width` | `240px` | Docs sidebar width |
+| `--fd-toc-width` | `240px` | Table of contents width |
+| `--fd-banner-height` | `var(--nav-height)` | Banner height |
+
+`landing-page`, `patterns-page`, and `blocks-page` override some layout variables to hide the default docs sidebar and use a wider content layout.
+
+## Fumadocs token bridge
+
+The docs app maps Fumadocs variables to Zeron UI semantic tokens:
+
+| Fumadocs variable | Zeron UI variable |
+| --- | --- |
+| `--color-fd-background` | `--background` |
+| `--color-fd-primary` | `--primary` |
+| `--color-fd-border` | `--border` |
+| `--color-fd-accent` | `--accent` |
+| `--color-fd-accent-foreground` | `--accent-foreground` |
+| `--color-fd-muted` | `--muted` |
+| `--color-fd-muted-foreground` | `--muted-foreground` |
+| `--color-fd-foreground` | `--foreground` |
+| `--color-fd-secondary` | `--secondary` |
+| `--color-fd-secondary-foreground` | `--secondary-foreground` |
+| `--color-fd-card` | `--card` |
+| `--color-fd-card-foreground` | `--card-foreground` |
+| `--color-fd-popover` | `--popover` |
+| `--color-fd-popover-foreground` | `--popover-foreground` |
+| `--color-fd-primary-foreground` | `--primary-foreground` |
+| `--color-fd-ring` | `--ring` |
+
+## Base styles
+
+`global.css` applies these base rules:
+
+```css
+* {
+  @apply border-border outline-ring/50;
+}
+
+body {
+  @apply bg-background text-foreground;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+```
+
+It also clips horizontal overflow on `html` and `body` to avoid accidental sideways scrolling.
+
+## Maintenance notes
+
+- Add component colors through semantic variables first, not hard-coded `oklch()` values.
+- When adding a token, define it in both `:root` and `.dark`.
+- Expose new public tokens through `@theme inline`.
+- Keep docs-only layout variables in `apps/docs/app/global.css`.
+- Keep reusable component-library variables in `packages/ui/src/styles.css`.
+- Keep Fumadocs `--color-fd-*` variables bridged to the Zeron UI theme so the docs site does not drift into a second color system.
+- The current `--muted` line has a duplicate semicolon. It does not break CSS parsing, but it can be cleaned up later.
