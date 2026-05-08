@@ -1,23 +1,106 @@
 ---
 title: Input
-description: Styled input control for forms.
+description: 用于表单、搜索和配置项编辑的单行文本输入组件。
 icon: TextCursorInput
 dependencies:
   - https://tailwindcss.com/
   - https://ui.shadcn.com/docs/components/input
+  - https://ui.shadcn.com/docs/components/input-group
 installer: input
 ---
 
-## Usage
+## 用法
+
+Input 是单行文本输入的基础组件，适用于表单字段、搜索框、筛选条件和配置项编辑。通过 `size` 控制输入框高度，通过 `variant` 匹配不同界面密度和视觉层级。
 
 ```tsx
 import { Input } from "@zeron-ui/ui/input";
 
 export function Example() {
-  return <Input placeholder="Email" type="email" />;
+  return <Input placeholder="邮箱地址" type="email" />;
 }
 ```
 
-## Examples
+## 示例
+
+### 基础输入框
 
 <Preview path="input" />
+
+### 不同样式
+
+<Preview path="input-variants" />
+
+| 样式 | 使用场景 |
+| --- | --- |
+| `outline` | 默认样式，适合大多数表单、弹窗和设置页字段。 |
+| `ghost` | 无边框、无背景填充，适合嵌入工具栏、表格单元格、轻量编辑区域。 |
+| `secondary` | 有背景填充、无边框，适合搜索、筛选、卡片内输入和弱分组表单。 |
+
+### 不同尺寸
+
+<Preview path="input-sizes" />
+
+| 尺寸 | 使用场景 |
+| --- | --- |
+| `sm` | 高密度表单、表格筛选、紧凑工具栏。 |
+| `default` | 常规表单、弹窗和页面编辑。 |
+| `lg` | 需要更高可点击区域的表单字段或重点输入项。 |
+| `xl` | 搜索入口、首屏输入、创建流程中的关键字段。 |
+
+### 组合输入框
+
+<Preview path="input-group" />
+
+当输入框需要和前缀、后缀、按钮或辅助信息组合在同一个控件里时，使用 `InputGroup`。它会统一边框、背景、圆角、焦点态和禁用态，让组合后的输入区域仍然像一个完整表单控件。
+
+### 前缀和后缀
+
+<Preview path="input-prefix-suffix" />
+
+Input 本身只负责单行输入。当需要 prefix 或 suffix 时，使用 `InputGroup`、`InputGroupAddon` 和 `InputGroupInput` 组合，让前后缀和输入框共享同一个边框、焦点态和禁用态。
+
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@zeron-ui/ui/input-group";
+import { SearchIcon } from "lucide-react";
+
+export function Example() {
+  return (
+    <InputGroup>
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <InputGroupInput placeholder="搜索组件" />
+      <InputGroupAddon align="inline-end">
+        <InputGroupText>⌘K</InputGroupText>
+      </InputGroupAddon>
+    </InputGroup>
+  );
+}
+```
+
+| 类型 | 使用场景 |
+| --- | --- |
+| prefix icon | 搜索、筛选、定位、用户、日历等用于说明输入类型的图标。 |
+| prefix text | 协议、货币符号、固定路径、命名空间等输入前固定内容。 |
+| suffix icon | 清除、校验状态、打开选择器、展开更多等输入后的辅助操作。 |
+| suffix text | 单位、计数、域名后缀、快捷键提示等输入后的说明内容。 |
+
+### 安装 Input Group
+
+如果项目中还没有安装 `input-group`，可以单独添加组合输入框组件。
+
+<Installer packageName="input-group" />
+
+### 使用建议
+
+- 表单中优先使用 `outline`，让字段边界清晰可见。
+- 搜索和筛选可以使用 `secondary`，让输入区域更像一个轻量容器。
+- 在表格、列表行或命令面板中可以使用 `ghost`，减少边框噪音。
+- 同一组表单内尽量保持尺寸一致，只在主搜索或关键输入项上使用更大的尺寸。
+- prefix 和 suffix 应该服务于输入理解，不要放置过多装饰内容；如果是可点击操作，优先使用 `InputGroupButton` 并提供可访问名称。

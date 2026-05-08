@@ -74,11 +74,23 @@
 
 .landing-page #nd-docs-layout {
   --fd-sidebar-width: 0px;
+  --fd-toc-width: 0px;
+  grid-template:
+    "header" var(--fd-docs-row-1)
+    "toc-popover" 0px
+    "main" 1fr / minmax(0, 1fr) !important;
   @apply pl-0!;
 }
 
-.landing-page #nd-sidebar {
-  @apply hidden;
+.landing-page #nd-sidebar,
+.landing-page [data-sidebar-placeholder],
+.landing-page [data-sidebar-panel] {
+  display: none !important;
+}
+
+.landing-page main {
+  grid-area: main;
+  min-width: 0;
 }
 
 .patterns-page #nd-docs-layout,

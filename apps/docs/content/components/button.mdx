@@ -1,25 +1,123 @@
 ---
 title: Button
-description: Shadcn button primitive with variants, sizes, and an asChild composition pattern.
+description: 基于 Shadcn 风格的按钮基础组件，支持不同样式、尺寸和 asChild 组合模式。
 icon: MousePointerClick
 dependencies:
   - https://tailwindcss.com/
   - https://ui.shadcn.com/
+  - https://lucide.dev/icons/
 installer: button
 ---
 
 ## Usage
 
+Button 是表单、弹窗、工具栏和导航触发器中最常用的操作组件。通过 `variant` 控制视觉层级，通过 `size` 适配不同密度的界面，也可以把图标直接放在文字前后，实现 prefix icon 和 suffix icon 的用法。
+
 ```tsx
 import { Button } from "@zeron-ui/ui/button";
 
 export function Example() {
-  return <Button>Save changes</Button>;
+  return <Button>保存更改</Button>;
 }
 ```
 
 ## Examples
 
-### Variants
+### 不同样式
 
 <Preview path="button-variants" />
+
+| 样式 | 使用场景 |
+| --- | --- |
+| `default` | 页面或区域中的主操作，例如保存、提交、继续。 |
+| `secondary` | 次级操作，需要保持可见，但不应抢占主操作的注意力。 |
+| `outline` | 中性操作、筛选、弹窗取消按钮，以及靠近密集内容的操作。 |
+| `ghost` | 工具栏、列表行、导航或悬浮出现的低强调操作。 |
+| `link` | 行内导航或接近文本样式的操作，当完整按钮形态显得过重时使用。 |
+| `destructive` | 删除、移除、撤销授权、重置等不可逆或高风险操作。 |
+
+### 不同尺寸
+
+<Preview path="button-sizes" />
+
+| 尺寸 | 使用场景 |
+| --- | --- |
+| `xs` | 高密度表格、紧凑列表行、小型重复控件。 |
+| `sm` | 卡片、列表项、紧凑表单中的次级操作。 |
+| `default` | 常规表单、弹窗和页面操作。 |
+| `lg` | 需要更强强调的主操作或更稀疏的布局。 |
+
+### 前置和后置图标
+
+<Preview path="button-icons" />
+
+当图标用于说明操作类型时，优先作为前置图标，例如新增、上传、搜索、筛选。当图标用于说明操作结果或方向时，优先作为后置图标，例如继续、打开、下载、向前跳转。
+
+```tsx
+import { Button } from "@zeron-ui/ui/button";
+import { ArrowRightIcon, PlusIcon } from "lucide-react";
+
+export function Example() {
+  return (
+    <>
+      <Button>
+        <PlusIcon />
+        新建项目
+      </Button>
+      <Button variant="outline">
+        继续
+        <ArrowRightIcon />
+      </Button>
+    </>
+  );
+}
+```
+
+### 图标按钮
+
+<Preview path="button-icon-buttons" />
+
+图标按钮适合紧凑、重复出现或位置关系明确的操作，并且图标在当前上下文中应足够常见，例如搜索、设置、关闭、更多操作、通知、行菜单或工具栏命令。当按钮没有可见文字时，必须通过 `aria-label` 提供可访问名称。
+
+| 尺寸 | 使用场景 |
+| --- | --- |
+| `icon-xs` | 非常密集的行内操作或紧凑工具控件。 |
+| `icon-sm` | 表格行、列表项、小型工具栏操作。 |
+| `icon` | 工具栏和头部区域中的默认图标按钮。 |
+| `icon-lg` | 强调程度更高的图标操作，或更适合触控的控件。 |
+
+### 按钮组
+
+<Preview path="button-group" />
+
+当多个按钮属于同一组操作，并且需要在视觉上形成一个整体时，使用 `ButtonGroup`。按钮组适合工具栏、批量操作、紧凑操作区、分段命令，以及包含「主要动作 + 更多操作」的组合。
+
+```tsx
+import { Button } from "@zeron-ui/ui/button";
+import { ButtonGroup, ButtonGroupSeparator } from "@zeron-ui/ui/button-group";
+import { MoreHorizontalIcon } from "lucide-react";
+
+export function Example() {
+  return (
+    <ButtonGroup aria-label="消息操作">
+      <Button variant="outline">归档</Button>
+      <Button variant="outline">删除</Button>
+      <ButtonGroupSeparator />
+      <Button aria-label="更多操作" size="icon" variant="outline">
+        <MoreHorizontalIcon />
+      </Button>
+    </ButtonGroup>
+  );
+}
+```
+
+| 组件 | 使用场景 |
+| --- | --- |
+| `ButtonGroup` | 包裹一组相关按钮，让它们共享边缘和视觉分组。 |
+| `ButtonGroupSeparator` | 在按钮组内分隔不同语义的操作，例如常用操作和更多操作。 |
+
+### 安装 Button Group
+
+如果项目中还没有安装 `button-group`，可以单独添加按钮组组件。
+
+<Installer packageName="button-group" />

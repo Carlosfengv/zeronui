@@ -4,7 +4,6 @@
   "pages": [
     "---Actions---",
     "button",
-    "button-group",
     "dropdown-menu",
     "switch",
     "---Forms---",
@@ -12,7 +11,6 @@
     "label",
     "input",
     "textarea",
-    "input-group",
     "key-value",
     "checkbox",
     "checkbox-group",

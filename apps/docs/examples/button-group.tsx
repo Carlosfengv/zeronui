@@ -4,17 +4,17 @@ import { ArchiveIcon, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 
 export default function ButtonGroupExample() {
   return (
-    <ButtonGroup aria-label="Message actions">
+    <ButtonGroup aria-label="消息操作">
       <Button variant="outline">
         <ArchiveIcon />
-        Archive
+        归档
       </Button>
       <Button variant="outline">
         <Trash2Icon />
-        Delete
+        删除
       </Button>
       <ButtonGroupSeparator />
-      <Button aria-label="More actions" size="icon" variant="outline">
+      <Button aria-label="更多操作" size="icon" variant="outline">
         <MoreHorizontalIcon />
       </Button>
     </ButtonGroup>

@@ -127,11 +127,11 @@ export function InputGroupText({
 export function InputGroupInput({
   className,
   ...props
-}: React.ComponentProps<"input">) {
+}: React.ComponentProps<typeof Input>) {
   return (
     <Input
       className={cn(
-        "flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0",
+        "flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 group-has-data-[align=inline-start]/input-group:pl-0 group-has-data-[align=inline-end]/input-group:pr-0",
         className,
       )}
       data-slot="input-group-control"

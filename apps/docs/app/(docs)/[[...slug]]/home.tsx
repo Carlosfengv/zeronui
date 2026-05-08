@@ -11,12 +11,6 @@ const categories = [
     slug: "button",
   },
   {
-    description: "Group related buttons and controls with shared edges.",
-    href: "/components/button-group",
-    name: "Button Group",
-    slug: "button-group",
-  },
-  {
     description: "Compact status labels with Shadcn variants.",
     href: "/components/badge",
     name: "Badge",
@@ -81,12 +75,6 @@ const categories = [
     href: "/components/textarea",
     name: "Textarea",
     slug: "textarea",
-  },
-  {
-    description: "Input wrappers with addons, buttons, and helper content.",
-    href: "/components/input-group",
-    name: "Input Group",
-    slug: "input-group",
   },
   {
     description: "Keyboard key primitives for shortcuts and commands.",
@@ -182,7 +170,7 @@ const categories = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto grid max-w-7xl gap-16 p-4 sm:gap-24">
+    <main className="mx-auto grid w-full max-w-7xl gap-16 p-4 sm:gap-24">
       <section className="flex min-h-[34rem] flex-col items-center justify-center text-center">
         <p className="mb-4 rounded-full border bg-muted/50 px-3 py-1 text-muted-foreground text-sm">
           Zeron UI
