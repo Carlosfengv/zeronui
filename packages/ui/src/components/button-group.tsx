@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 import { Slot } from "./slot";
 
 const buttonGroupVariants = cva(
-  "inline-flex w-fit items-stretch rounded-md shadow-xs [&>*]:rounded-none [&>*]:shadow-none",
+  "inline-flex w-fit items-stretch rounded-lg shadow-xs has-[[data-size=lg]]:rounded-xl has-[[data-size=sm]]:rounded-md has-[[data-size=xs]]:rounded-sm has-[[data-size=icon-lg]]:rounded-xl has-[[data-size=icon-sm]]:rounded-md has-[[data-size=icon-xs]]:rounded-sm [&>*]:rounded-none [&>*]:shadow-none",
   {
     defaultVariants: {
       orientation: "horizontal",
@@ -12,9 +12,9 @@ const buttonGroupVariants = cva(
     variants: {
       orientation: {
         horizontal:
-          "flex-row [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md [&>*+*]:-ml-px",
+          "flex-row [&>*:first-child]:rounded-l-lg [&>*:last-child]:rounded-r-lg [&>*+*]:-ml-px [&>[data-size=lg]:first-child]:rounded-l-xl [&>[data-size=lg]:last-child]:rounded-r-xl [&>[data-size=sm]:first-child]:rounded-l-md [&>[data-size=sm]:last-child]:rounded-r-md [&>[data-size=xs]:first-child]:rounded-l-sm [&>[data-size=xs]:last-child]:rounded-r-sm [&>[data-size=icon-lg]:first-child]:rounded-l-xl [&>[data-size=icon-lg]:last-child]:rounded-r-xl [&>[data-size=icon-sm]:first-child]:rounded-l-md [&>[data-size=icon-sm]:last-child]:rounded-r-md [&>[data-size=icon-xs]:first-child]:rounded-l-sm [&>[data-size=icon-xs]:last-child]:rounded-r-sm",
         vertical:
-          "flex-col [&>*:first-child]:rounded-t-md [&>*:last-child]:rounded-b-md [&>*+*]:-mt-px",
+          "flex-col [&>*:first-child]:rounded-t-lg [&>*:last-child]:rounded-b-lg [&>*+*]:-mt-px [&>[data-size=lg]:first-child]:rounded-t-xl [&>[data-size=lg]:last-child]:rounded-b-xl [&>[data-size=sm]:first-child]:rounded-t-md [&>[data-size=sm]:last-child]:rounded-b-md [&>[data-size=xs]:first-child]:rounded-t-sm [&>[data-size=xs]:last-child]:rounded-b-sm [&>[data-size=icon-lg]:first-child]:rounded-t-xl [&>[data-size=icon-lg]:last-child]:rounded-b-xl [&>[data-size=icon-sm]:first-child]:rounded-t-md [&>[data-size=icon-sm]:last-child]:rounded-b-md [&>[data-size=icon-xs]:first-child]:rounded-t-sm [&>[data-size=icon-xs]:last-child]:rounded-b-sm",
       },
     },
   },
@@ -48,7 +48,9 @@ export function ButtonGroupSeparator({
     <hr
       className={cn(
         "border-0 bg-border",
-        orientation === "vertical" ? "mx-0 w-px self-stretch" : "h-px w-full",
+        orientation === "vertical"
+          ? "mx-0 my-0 w-px shrink-0 self-stretch"
+          : "my-0 h-px w-full shrink-0",
         className,
       )}
       data-orientation={orientation}
@@ -69,7 +71,7 @@ export function ButtonGroupText({
   return (
     <Comp
       className={cn(
-        "flex items-center justify-center border border-input bg-background px-3 text-sm",
+        "flex min-h-8 items-center justify-center border border-input bg-background px-3 text-sm",
         className,
       )}
       data-slot="button-group-text"

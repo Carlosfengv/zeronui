@@ -22,7 +22,7 @@ export function PatternPreviewTabs({
     <div className="flex size-full min-h-0 flex-col overflow-hidden">
       <div
         aria-label={`${filename} tabs`}
-        className="flex shrink-0 items-center gap-2 border-b bg-muted/30 px-2 py-1.5"
+        className="flex shrink-0 items-center gap-2 border-b bg-muted px-2 py-1.5"
         role="tablist"
       >
         <Button
@@ -61,7 +61,7 @@ export function PatternPreviewTabs({
         {activeTab === "preview" ? (
           children
         ) : (
-          <pre className="size-full min-h-0 overflow-auto bg-muted/20 p-4 text-sm leading-6">
+          <pre className="size-full min-h-0 overflow-auto bg-muted p-4 text-sm leading-6">
             <code>{source}</code>
           </pre>
         )}

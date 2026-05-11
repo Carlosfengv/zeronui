@@ -524,7 +524,7 @@ export const formThumbnail = (
 
 // Frame
 export const frameThumbnail = (
-  <div className="flex-1 rounded-[calc(var(--radius-2xl)+2px)] bg-muted/72 p-1">
+  <div className="flex-1 rounded-[calc(var(--radius-2xl)+2px)] bg-muted p-1">
     <div className="flex flex-col gap-2 p-4">
       <Text className="w-[70%]" />
     </div>

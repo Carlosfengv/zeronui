@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "../lib/utils";
 
 export const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium text-sm outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: "default",
@@ -12,14 +12,14 @@ export const buttonVariants = cva(
     },
     variants: {
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        icon: "size-9",
-        "icon-lg": "size-10",
-        "icon-sm": "size-8",
-        "icon-xs": "size-7",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        xs: "h-7 rounded-md gap-1.5 px-2.5 has-[>svg]:px-2",
+        default: "min-h-8 px-3 py-[5px] has-[>svg]:px-2.5",
+        icon: "min-h-8 min-w-8 p-0",
+        "icon-lg": "min-h-9 min-w-9 p-0",
+        "icon-sm": "min-h-7 min-w-7 rounded-md p-0",
+        "icon-xs": "min-h-6 min-w-6 rounded-sm p-0",
+        lg: "min-h-9 rounded-xl px-5 py-1.5 has-[>svg]:px-3.5",
+        sm: "min-h-7 rounded-md gap-1.5 px-2.5 py-[3px] has-[>svg]:px-2",
+        xs: "min-h-6 rounded-sm gap-1 px-2 py-[3px] text-xs has-[>svg]:px-1.5",
       },
       variant: {
         default:
@@ -50,9 +50,12 @@ export function Button({
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
   }) {
+  const resolvedSize = size ?? "default";
+
   return (
     <ButtonPrimitive
-      className={cn(buttonVariants({ className, size, variant }))}
+      className={cn(buttonVariants({ className, size: resolvedSize, variant }))}
+      data-size={resolvedSize}
       data-slot="button"
       render={asChild && React.isValidElement(children) ? children : render}
       {...props}

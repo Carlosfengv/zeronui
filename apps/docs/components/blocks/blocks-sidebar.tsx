@@ -56,7 +56,7 @@ export function BlocksSidebar({ activePath }: BlocksSidebarProps) {
                 className={cn(
                   "rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
                   activePath === item.href
-                    ? "bg-muted/40 text-primary font-medium"
+                    ? "bg-muted text-primary font-medium"
                     : "text-foreground",
                 )}
                 href={item.href}

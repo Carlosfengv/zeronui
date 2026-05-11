@@ -63,7 +63,7 @@ export function Links({
         <Link
           className={cn(
             "inline-flex h-auto items-center rounded-md bg-transparent px-3 py-1.5 text-sm font-medium shadow-none transition-all hover:bg-accent hover:text-accent-foreground",
-            link.active && "bg-muted/40 text-foreground font-medium",
+            link.active && "bg-muted text-foreground font-medium",
           )}
           href={link.href}
           key={link.href}

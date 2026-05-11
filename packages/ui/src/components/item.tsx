@@ -18,7 +18,7 @@ const itemVariants = cva(
       },
       variant: {
         default: "",
-        muted: "bg-muted/50",
+        muted: "bg-muted",
         outline: "border bg-background",
       },
     },

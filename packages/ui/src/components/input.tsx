@@ -3,7 +3,7 @@ import type * as React from "react";
 import { cn } from "../lib/utils";
 
 export const inputVariants = cva(
-  "flex w-full min-w-0 rounded-md outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full min-w-0 rounded-lg outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     defaultVariants: {
       size: "default",
@@ -11,9 +11,9 @@ export const inputVariants = cva(
     },
     variants: {
       size: {
-        default: "h-9 px-3 py-1 text-base md:text-sm",
-        lg: "h-10 px-3.5 py-2 text-base",
-        sm: "h-8 px-2.5 py-1 text-sm",
+        default: "min-h-8 px-3 py-1 text-base md:text-sm",
+        lg: "min-h-9 rounded-xl px-3.5 py-1.5 text-base",
+        sm: "min-h-7 rounded-md px-2.5 py-0.5 text-sm",
         xl: "h-11 px-4 py-2 text-base",
       },
       variant: {

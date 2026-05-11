@@ -270,7 +270,7 @@ function DataGridRowImpl<TData>({
             {typeof cell.column.columnDef.header === "function" ? (
               <div
                 className={cn("size-full px-3 py-1.5", {
-                  "bg-muted/30": isRowSelected,
+                  "bg-muted": isRowSelected,
                 })}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

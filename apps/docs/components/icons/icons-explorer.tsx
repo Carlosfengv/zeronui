@@ -17,22 +17,136 @@ import { useMemo, useRef, useState } from "react";
 import { aiStudioIcons } from "./ai-studio-icons";
 
 type IconEntry = {
+  group: IconGroup;
   Icon: (typeof aiStudioIcons)[keyof typeof aiStudioIcons];
   label: string;
   name: string;
   searchValue: string;
 };
 
+type IconGroup =
+  | "Navigation"
+  | "Product"
+  | "AI"
+  | "Infrastructure"
+  | "Workspace"
+  | "People"
+  | "Interface"
+  | "General";
+
+const iconGroups = [
+  "Navigation",
+  "Product",
+  "AI",
+  "Infrastructure",
+  "Workspace",
+  "People",
+  "Interface",
+  "General",
+] satisfies IconGroup[];
+
 const iconEntries = Object.entries(aiStudioIcons).map(([name, Icon]) => {
   const label = humanizeIconName(name);
+  const group = getIconGroup(name);
 
   return {
+    group,
     Icon,
     label,
     name,
-    searchValue: `${name} ${label}`.toLowerCase(),
+    searchValue: `${name} ${label} ${group}`.toLowerCase(),
   } satisfies IconEntry;
 });
+
+function getIconGroup(name: string): IconGroup {
+  if (["IconReturn", "IconDashboard", "IconList", "IconTable"].includes(name)) {
+    return "Navigation";
+  }
+
+  if (
+    [
+      "IconMyApp",
+      "IconAppStore",
+      "IconApp",
+      "IconModels",
+      "IconModelService",
+      "IconSkill",
+    ].includes(name)
+  ) {
+    return "Product";
+  }
+
+  if (
+    [
+      "IconAgentic",
+      "IconAiProvider",
+      "IconAutomations",
+      "IconInspiration",
+    ].includes(name)
+  ) {
+    return "AI";
+  }
+
+  if (
+    [
+      "IconInfra",
+      "IconNode",
+      "IconCompute",
+      "IconTerminal",
+      "IconZone",
+    ].includes(name)
+  ) {
+    return "Infrastructure";
+  }
+
+  if (
+    [
+      "IconFolder",
+      "IconKnowledge",
+      "IconWorkspace",
+      "IconSession",
+      "IconChannel",
+      "IconActivityLog",
+      "IconAudit",
+    ].includes(name)
+  ) {
+    return "Workspace";
+  }
+
+  if (
+    [
+      "IconProfile",
+      "IconMember",
+      "IconAccount",
+      "IconUser",
+      "IconSecurity",
+      "IconLogout",
+    ].includes(name)
+  ) {
+    return "People";
+  }
+
+  if (
+    [
+      "IconSearch",
+      "IconPinned",
+      "IconPined",
+      "IconPin",
+      "IconSettings",
+      "IconSettings2",
+      "IconMoreH",
+      "IconPhoto",
+      "IconTrends",
+      "IconNotifi",
+      "IconShare",
+      "IconUpload",
+    ].includes(name)
+  ) {
+    return "Interface";
+  }
+
+  return "General";
+}
 
 function humanizeIconName(name: string) {
   return name
@@ -68,6 +182,17 @@ export function IconsExplorer() {
       icon.searchValue.includes(normalizedQuery),
     );
   }, [query]);
+
+  const groupedIcons = useMemo(
+    () =>
+      iconGroups
+        .map((group) => ({
+          group,
+          icons: filteredIcons.filter((icon) => icon.group === group),
+        }))
+        .filter(({ icons }) => icons.length > 0),
+    [filteredIcons],
+  );
 
   async function copyText(value: string, type: "svg" | "usage") {
     await navigator.clipboard.writeText(value);
@@ -144,29 +269,47 @@ export function IconsExplorer() {
         </div>
       </section>
 
-      {filteredIcons.length > 0 ? (
-        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
-          {filteredIcons.map(({ Icon, label, name }) => (
-            <button
-              className="group text-left"
-              key={name}
-              onClick={() => openIcon({ Icon, label, name, searchValue: "" })}
-              type="button"
-            >
-              <Card className="h-full overflow-hidden border-transparent shadow-none">
-                <CardPanel className="grid gap-2 p-2">
-                  <div className="grid aspect-square place-items-center rounded-lg border bg-background text-foreground hover:border-primary/60 group-hover:border-primary/60">
-                    <Icon size={40} title={label} />
-                  </div>
-                  <div className="min-w-0 space-y-1">
-                    <div className="truncate font-medium text-sm">{label}</div>
-                    <div className="truncate text-muted-foreground text-xs">
-                      {name}
-                    </div>
-                  </div>
-                </CardPanel>
-              </Card>
-            </button>
+      {groupedIcons.length > 0 ? (
+        <section className="grid gap-10">
+          {groupedIcons.map(({ group, icons }) => (
+            <div className="grid gap-4" key={group}>
+              <div className="flex items-center justify-between gap-4">
+                <h2 className="font-semibold text-lg tracking-tight">
+                  {group}
+                </h2>
+                <span className="text-muted-foreground text-sm">
+                  {icons.length} icons
+                </span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+                {icons.map(({ group, Icon, label, name }) => (
+                  <button
+                    className="group text-left"
+                    key={name}
+                    onClick={() =>
+                      openIcon({ group, Icon, label, name, searchValue: "" })
+                    }
+                    type="button"
+                  >
+                    <Card className="h-full overflow-hidden border-transparent shadow-none">
+                      <CardPanel className="grid gap-2 p-2">
+                        <div className="grid aspect-square place-items-center rounded-lg border bg-background text-foreground hover:border-primary/60 group-hover:border-primary/60">
+                          <Icon size={40} title={label} />
+                        </div>
+                        <div className="min-w-0 space-y-1">
+                          <div className="truncate font-medium text-sm">
+                            {label}
+                          </div>
+                          <div className="truncate text-muted-foreground text-xs">
+                            {name}
+                          </div>
+                        </div>
+                      </CardPanel>
+                    </Card>
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
         </section>
       ) : (
@@ -219,7 +362,7 @@ export function IconsExplorer() {
                         Copy
                       </Button>
                     </div>
-                    <pre className="max-w-full overflow-x-auto rounded-lg border bg-muted/50 p-3 text-xs">
+                    <pre className="max-w-full overflow-x-auto rounded-lg border bg-muted p-3 text-xs">
                       <code>{usageCode}</code>
                     </pre>
                   </div>

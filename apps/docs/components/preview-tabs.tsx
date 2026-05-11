@@ -29,7 +29,7 @@ export function PreviewTabs({
     >
       <div
         aria-label={`${filename} preview tabs`}
-        className="flex w-full items-center gap-2 border-b bg-muted/30 px-2 py-1.5"
+        className="flex w-full items-center gap-2 border-b bg-muted px-2 py-1.5"
         role="tablist"
       >
         <Button
@@ -69,7 +69,7 @@ export function PreviewTabs({
         {activeTab === "preview" ? (
           children
         ) : (
-          <pre className="size-full overflow-auto bg-muted/20 p-4 text-sm leading-6">
+          <pre className="size-full overflow-auto bg-muted p-4 text-sm leading-6">
             <code>{source}</code>
           </pre>
         )}

@@ -1,23 +1,35 @@
 ---
-title: Style Variables
-description: Theme variables and global style structure used by Zeron UI.
+title: 样式变量
+description: Zeron UI 使用的主题变量、Tailwind 映射和全局样式结构。
 icon: Palette
 ---
 
-## Source files
+export const ColorIcon = ({ value }) => (
+  <span
+    className="mr-3 inline-block h-10 w-10 rounded-xl border border-border align-middle shadow-sm"
+    style={{ background: value }}
+  />
+);
 
-Zeron UI uses two style entry points:
+## 样式来源
 
-| File | Responsibility |
+Zeron UI 的样式入口主要分为组件库和文档站两层：
+
+| 文件 | 职责 |
 | --- | --- |
-| `packages/ui/src/styles.css` | Component library theme variables, Tailwind v4 theme mapping, custom variants, shared utilities |
-| `apps/docs/app/global.css` | Docs app global imports, Fumadocs token bridge, layout variables, base page styles |
+| `packages/ui/src/styles.css` | 组件库主题变量、Tailwind v4 `@theme inline` 映射、自定义状态 variant、共享 utility |
+| `apps/docs/app/global.css` | 文档站全局入口、组件库样式导入、Fumadocs 变量桥接、页面布局变量、基础页面样式 |
 
-The component library theme source is `packages/ui/src/styles.css`. The docs app imports it through `@zeron-ui/ui/styles.css`, then maps Fumadocs variables back to the same semantic tokens.
+核心规则：
 
-## Import order
+- 组件库的主题变量以 `packages/ui/src/styles.css` 为准。
+- 文档站通过 `@zeron-ui/ui/styles.css` 引入组件库变量。
+- 文档站再把 Fumadocs 的 `--color-fd-*` 变量桥接到 Zeron UI 的语义变量，避免出现第二套颜色系统。
+- 变量体系基于 Tailwind CSS v4 `@theme inline`，颜色值使用 `oklch()`。
 
-`apps/docs/app/global.css` loads styles in this order:
+## 加载顺序
+
+`apps/docs/app/global.css` 的导入顺序如下：
 
 ```css
 @import "tailwindcss";
@@ -27,49 +39,23 @@ The component library theme source is `packages/ui/src/styles.css`. The docs app
 @import "tw-animate-css";
 ```
 
-The docs app also scans component source and MDX content for Tailwind classes:
+含义：
+
+- Tailwind 先加载。
+- Zeron UI 组件库变量随后注入。
+- Fumadocs 基础样式和 preset 再加载。
+- `tw-animate-css` 提供动画工具类。
+
+文档站还通过 `@source` 把组件库源码和 MDX 内容纳入 Tailwind 扫描范围：
 
 ```css
 @source "../../../packages/ui/src/**/*.{js,jsx,ts,tsx}";
 @source "./**/*.{js,jsx,ts,tsx,mdx}";
 ```
 
-## Tailwind theme mapping
+## Tailwind 主题映射
 
-`packages/ui/src/styles.css` uses Tailwind CSS v4 `@theme inline` to expose CSS variables as Tailwind tokens.
-
-### Font tokens
-
-| Tailwind token | CSS variable | Default value |
-| --- | --- | --- |
-| `--font-sans` | `--font-sans` | `Geist, ui-sans-serif, system-ui, sans-serif` |
-| `--font-mono` | `--font-mono` | `"Geist Mono", ui-monospace, SFMono-Regular, monospace` |
-
-### Color tokens
-
-| Tailwind token | CSS variable | Meaning |
-| --- | --- | --- |
-| `--color-background` | `--background` | Default page background |
-| `--color-foreground` | `--foreground` | Default text and icon color |
-| `--color-card` | `--card` | Card or panel background |
-| `--color-card-foreground` | `--card-foreground` | Card or panel foreground |
-| `--color-popover` | `--popover` | Floating layer background |
-| `--color-popover-foreground` | `--popover-foreground` | Floating layer foreground |
-| `--color-primary` | `--primary` | Primary action or emphasis |
-| `--color-primary-foreground` | `--primary-foreground` | Foreground on primary surfaces |
-| `--color-secondary` | `--secondary` | Secondary action or soft surface |
-| `--color-secondary-foreground` | `--secondary-foreground` | Foreground on secondary surfaces |
-| `--color-muted` | `--muted` | Muted surface |
-| `--color-muted-foreground` | `--muted-foreground` | Secondary text or muted icon color |
-| `--color-accent` | `--accent` | Hover, active, menu highlight, selected row |
-| `--color-accent-foreground` | `--accent-foreground` | Foreground on accent surfaces |
-| `--color-destructive` | `--destructive` | Error, delete, destructive action |
-| `--color-border` | `--border` | Default border |
-| `--color-input` | `--input` | Form control border or background |
-| `--color-ring` | `--ring` | Focus ring |
-| `--color-chart-1` to `--color-chart-5` | `--chart-1` to `--chart-5` | Default chart palette |
-
-Use semantic classes in components:
+`packages/ui/src/styles.css` 使用 `@theme inline` 将 CSS variables 暴露为 Tailwind token。组件中应优先使用语义类名，而不是直接写颜色值。
 
 ```tsx
 <div className="bg-background text-foreground" />
@@ -77,16 +63,47 @@ Use semantic classes in components:
 <div className="border-border ring-ring" />
 ```
 
-### Radius tokens
+### 字体 token
 
-| Tailwind token | Calculation | Typical use |
+| Tailwind token | CSS variable | 默认值 |
 | --- | --- | --- |
-| `--radius-sm` | `calc(var(--radius) - 4px)` | Small controls and labels |
-| `--radius-md` | `calc(var(--radius) - 2px)` | Inputs and buttons |
-| `--radius-lg` | `var(--radius)` | Cards, panels, dialogs |
-| `--radius-xl` | `calc(var(--radius) + 4px)` | Large containers |
+| `--font-sans` | `--font-sans` | `Geist, ui-sans-serif, system-ui, sans-serif` |
+| `--font-mono` | `--font-mono` | `"Geist Mono", ui-monospace, SFMono-Regular, monospace` |
 
-Base value:
+### 颜色 token
+
+| Tailwind token | CSS variable | 语义 |
+| --- | --- | --- |
+| <ColorIcon value="var(--background)" /> `--color-background` | `--background` | 页面默认背景 |
+| <ColorIcon value="var(--foreground)" /> `--color-foreground` | `--foreground` | 页面默认文字和图标 |
+| <ColorIcon value="var(--card)" /> `--color-card` | `--card` | 卡片或面板背景 |
+| <ColorIcon value="var(--card-foreground)" /> `--color-card-foreground` | `--card-foreground` | 卡片或面板前景 |
+| <ColorIcon value="var(--popover)" /> `--color-popover` | `--popover` | 浮层背景 |
+| <ColorIcon value="var(--popover-foreground)" /> `--color-popover-foreground` | `--popover-foreground` | 浮层前景 |
+| <ColorIcon value="var(--primary)" /> `--color-primary` | `--primary` | 主操作或主强调 |
+| <ColorIcon value="var(--primary-foreground)" /> `--color-primary-foreground` | `--primary-foreground` | 主色背景上的前景 |
+| <ColorIcon value="var(--secondary)" /> `--color-secondary` | `--secondary` | 次级操作或弱背景 |
+| <ColorIcon value="var(--secondary-foreground)" /> `--color-secondary-foreground` | `--secondary-foreground` | 次级背景上的前景 |
+| <ColorIcon value="var(--muted)" /> `--color-muted` | `--muted` | 弱化背景 |
+| <ColorIcon value="var(--muted-foreground)" /> `--color-muted-foreground` | `--muted-foreground` | 辅助文字或弱化图标 |
+| <ColorIcon value="var(--accent)" /> `--color-accent` | `--accent` | hover、active、菜单高亮、选中行 |
+| <ColorIcon value="var(--accent-foreground)" /> `--color-accent-foreground` | `--accent-foreground` | accent 背景上的前景 |
+| <ColorIcon value="var(--destructive)" /> `--color-destructive` | `--destructive` | 错误、删除、危险操作 |
+| <ColorIcon value="var(--border)" /> `--color-border` | `--border` | 默认边框 |
+| <ColorIcon value="var(--input)" /> `--color-input` | `--input` | 表单控件边框或底色 |
+| <ColorIcon value="var(--ring)" /> `--color-ring` | `--ring` | focus ring |
+| <ColorIcon value="var(--chart-1)" /> `--color-chart-1` 到 `--color-chart-5` | `--chart-1` 到 `--chart-5` | 默认图表色板 |
+
+### 圆角 token
+
+| Tailwind token | 计算方式 | 常见用途 |
+| --- | --- | --- |
+| `--radius-sm` | `calc(var(--radius) - 4px)` | 小控件、小标签 |
+| `--radius-md` | `calc(var(--radius) - 2px)` | 输入框、按钮 |
+| `--radius-lg` | `var(--radius)` | 卡片、面板、弹窗 |
+| `--radius-xl` | `calc(var(--radius) + 4px)` | 大容器 |
+
+基础值：
 
 ```css
 :root {
@@ -94,103 +111,115 @@ Base value:
 }
 ```
 
-## Theme variables
+## 主题变量
 
-Zeron UI uses `:root` for the default light theme and `.dark` to override the same variables for dark mode.
+Zeron UI 使用 `:root` 定义默认浅色主题，用 `.dark` 覆盖同名变量实现暗色主题。新增公开变量时，需要同时补齐 `:root`、`.dark` 和 `@theme inline`。
 
-### Surfaces
+### 基础承载面
 
-| Variable | Light | Dark | Meaning |
+| 变量 | 浅色值 | 暗色值 | 含义 |
 | --- | --- | --- | --- |
-| `--background` | `oklch(1 0 0)` | `oklch(0.141 0.005 285.823)` | Page background |
-| `--foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` | Page foreground |
-| `--card` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | Card background |
-| `--card-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Card foreground |
-| `--popover` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | Popover background |
-| `--popover-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Popover foreground |
+| <ColorIcon value="var(--background)" /> `--background` | `oklch(1 0 0)` | `oklch(0.141 0.005 285.823)` | 页面背景 |
+| <ColorIcon value="var(--foreground)" /> `--foreground` | `oklch(0.145 0 0)` | `oklch(0.985 0 0)` | 页面主前景 |
+| <ColorIcon value="var(--card)" /> `--card` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | 卡片背景 |
+| <ColorIcon value="var(--card-foreground)" /> `--card-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | 卡片前景 |
+| <ColorIcon value="var(--popover)" /> `--popover` | `oklch(1 0 0)` | `oklch(0.21 0.006 285.885)` | 浮层背景 |
+| <ColorIcon value="var(--popover-foreground)" /> `--popover-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | 浮层前景 |
 
-### Actions and states
+维护建议：
 
-| Variable | Light | Dark | Meaning |
+- `background` 用于大面积页面铺底。
+- `card` 和 `popover` 用于从页面背景中抬起内容，不承担品牌强调色职责。
+- `foreground`、`card-foreground`、`popover-foreground` 必须分别和对应背景保持可读对比。
+
+### 操作与状态色
+
+| 变量 | 浅色值 | 暗色值 | 含义 |
 | --- | --- | --- | --- |
-| `--primary` | `oklch(10.511% 0.02984 250.114)` | `oklch(0.92 0.004 286.32)` | Primary action background |
-| `--primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Foreground on primary |
-| `--secondary` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | Secondary action or soft surface |
-| `--secondary-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Foreground on secondary |
-| `--accent` | `oklch(91.405% 0.01811 261.4 / 0.25)` | `oklch(0.274 0.006 286.033)` | Hover, active, highlighted item |
-| `--accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Foreground on accent |
-| `--destructive` | `oklch(0.577 0.245 27.325)` | `oklch(0.704 0.191 22.216)` | Destructive or error state |
+| <ColorIcon value="var(--primary)" /> `--primary` | `oklch(10.511% 0.02984 250.114)` | `oklch(0.92 0.004 286.32)` | 主操作背景 |
+| <ColorIcon value="var(--primary-foreground)" /> `--primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | 主操作前景 |
+| <ColorIcon value="var(--secondary)" /> `--secondary` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | 次级操作或弱背景 |
+| <ColorIcon value="var(--secondary-foreground)" /> `--secondary-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | 次级操作前景 |
+| <ColorIcon value="var(--accent)" /> `--accent` | `oklch(91.405% 0.01811 261.4 / 0.25)` | `oklch(0.274 0.006 286.033)` | hover、active、菜单高亮 |
+| <ColorIcon value="var(--accent-foreground)" /> `--accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | accent 背景上的前景 |
+| <ColorIcon value="var(--destructive)" /> `--destructive` | `oklch(0.577 0.245 27.325)` | `oklch(0.704 0.191 22.216)` | 危险、错误、删除 |
 
-`--destructive-foreground` is not currently defined. If solid destructive buttons are needed, add this variable in both `:root` and `.dark`, then expose it in `@theme inline`.
+当前没有定义 `--destructive-foreground`。如果需要实底危险按钮，建议在浅色和暗色主题中补充该变量，并在 `@theme inline` 中暴露。
 
-### Muted, border, input, ring
+### 弱化、边框、输入与聚焦
 
-| Variable | Light | Dark | Meaning |
+| 变量 | 浅色值 | 暗色值 | 含义 |
 | --- | --- | --- | --- |
-| `--muted` | `oklch(91.405% 0.01811 261.4 / 0.8)` | `oklch(0.274 0.006 286.033)` | Muted background |
-| `--muted-foreground` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` | Supporting text |
-| `--border` | `oklch(34.567% 0.02551 269.635 / 0.12)` | `oklch(1 0 0 / 10%)` | Default border |
-| `--input` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 15%)` | Form control border or fill |
-| `--ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | Focus ring |
+| <ColorIcon value="var(--muted)" /> `--muted` | `oklch(91.405% 0.01811 261.4 / 0.25)` | `oklch(0.274 0.006 286.033)` | 弱化背景 |
+| <ColorIcon value="var(--muted-foreground)" /> `--muted-foreground` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` | 辅助文字、placeholder、meta 信息 |
+| <ColorIcon value="var(--border)" /> `--border` | `oklch(34.567% 0.02551 269.635 / 0.12)` | `oklch(1 0 0 / 10%)` | 默认边框 |
+| <ColorIcon value="var(--input)" /> `--input` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 15%)` | 表单控件边框或底色 |
+| <ColorIcon value="var(--ring)" /> `--ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | 聚焦描边 |
 
-### Chart palette
+### 图表色板
 
-| Variable | Light | Dark |
+| 变量 | 浅色值 | 暗色值 |
 | --- | --- | --- |
-| `--chart-1` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` |
-| `--chart-2` | `oklch(0.442 0.017 285.786)` | `oklch(0.552 0.016 285.938)` |
-| `--chart-3` | `oklch(0.37 0.013 285.805)` | `oklch(0.442 0.017 285.786)` |
-| `--chart-4` | `oklch(0.274 0.006 286.033)` | `oklch(0.37 0.013 285.805)` |
-| `--chart-5` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` |
+| <ColorIcon value="var(--chart-1)" /> `--chart-1` | `oklch(0.552 0.016 285.938)` | `oklch(0.705 0.015 286.067)` |
+| <ColorIcon value="var(--chart-2)" /> `--chart-2` | `oklch(0.442 0.017 285.786)` | `oklch(0.552 0.016 285.938)` |
+| <ColorIcon value="var(--chart-3)" /> `--chart-3` | `oklch(0.37 0.013 285.805)` | `oklch(0.442 0.017 285.786)` |
+| <ColorIcon value="var(--chart-4)" /> `--chart-4` | `oklch(0.274 0.006 286.033)` | `oklch(0.37 0.013 285.805)` |
+| <ColorIcon value="var(--chart-5)" /> `--chart-5` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` |
 
-The current chart palette is neutral and low saturation. For charts that need stronger series distinction, add product-specific chart tokens instead of changing the base palette casually.
+当前图表色板是低饱和中性色，更适合后台和文档类界面。如果业务图表需要更强的系列区分，应扩展业务图表 token，而不是随意改动基础 `chart-*`。
 
-### Sidebar tokens
+### Sidebar 变量
 
-| Variable | Light | Dark | Meaning |
+| 变量 | 浅色值 | 暗色值 | 含义 |
 | --- | --- | --- | --- |
-| `--sidebar` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Sidebar background |
-| `--sidebar-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | Sidebar foreground |
-| `--sidebar-primary` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` | Sidebar primary emphasis |
-| `--sidebar-primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | Foreground on sidebar primary |
-| `--sidebar-accent` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | Sidebar hover or active background |
-| `--sidebar-accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | Sidebar hover or active foreground |
-| `--sidebar-border` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 10%)` | Sidebar border |
-| `--sidebar-ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | Sidebar focus ring |
+| <ColorIcon value="var(--sidebar)" /> `--sidebar` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | 侧边栏背景 |
+| <ColorIcon value="var(--sidebar-foreground)" /> `--sidebar-foreground` | `oklch(0.141 0.005 285.823)` | `oklch(0.985 0 0)` | 侧边栏文字或图标 |
+| <ColorIcon value="var(--sidebar-primary)" /> `--sidebar-primary` | `oklch(0.21 0.006 285.885)` | `oklch(0.92 0.004 286.32)` | 侧边栏主强调 |
+| <ColorIcon value="var(--sidebar-primary-foreground)" /> `--sidebar-primary-foreground` | `oklch(0.985 0 0)` | `oklch(0.21 0.006 285.885)` | 侧边栏主强调前景 |
+| <ColorIcon value="var(--sidebar-accent)" /> `--sidebar-accent` | `oklch(0.967 0.001 286.375)` | `oklch(0.274 0.006 286.033)` | 侧边栏 hover 或 active 背景 |
+| <ColorIcon value="var(--sidebar-accent-foreground)" /> `--sidebar-accent-foreground` | `oklch(0.21 0.006 285.885)` | `oklch(0.985 0 0)` | 侧边栏 hover 或 active 前景 |
+| <ColorIcon value="var(--sidebar-border)" /> `--sidebar-border` | `oklch(0.92 0.004 286.32)` | `oklch(1 0 0 / 10%)` | 侧边栏边框 |
+| <ColorIcon value="var(--sidebar-ring)" /> `--sidebar-ring` | `oklch(0.705 0.015 286.067)` | `oklch(0.552 0.016 285.938)` | 侧边栏内聚焦描边 |
 
-## Custom variants
+## 自定义状态 Variant
 
-`styles.css` defines Tailwind custom variants for common component states.
+`styles.css` 定义了一组 Tailwind custom variant，用来统一组件状态选择器。
 
-| Variant | Matches | Use |
+| Variant | 匹配条件 | 用途 |
 | --- | --- | --- |
-| `dark` | `&:is(.dark *)` | Dark mode |
-| `data-open` | `[data-state="open"]` or active `[data-open]` | Open state |
-| `data-closed` | `[data-state="closed"]` or active `[data-closed]` | Closed state |
-| `data-checked` | `[data-state="checked"]` or active `[data-checked]` | Checked state |
-| `data-disabled` | `[data-disabled="true"]` or active `[data-disabled]` | Disabled state |
-| `data-active` | `[data-state="active"]` or active `[data-active]` | Active state |
+| `dark` | `&:is(.dark *)` | 暗色模式 |
+| `data-open` | `[data-state="open"]` 或有效的 `[data-open]` | 打开态，如 Popover、Dialog、Dropdown |
+| `data-closed` | `[data-state="closed"]` 或有效的 `[data-closed]` | 关闭态 |
+| `data-checked` | `[data-state="checked"]` 或有效的 `[data-checked]` | 选中态，如 Checkbox、Switch、Radio |
+| `data-disabled` | `[data-disabled="true"]` 或有效的 `[data-disabled]` | 禁用态 |
+| `data-active` | `[data-state="active"]` 或有效的 `[data-active]` | 激活态，如 Tabs、导航项 |
 
-Example:
+示例：
 
 ```tsx
 <button className="data-active:bg-accent data-disabled:opacity-50" />
 ```
 
-## Animation tokens
+维护建议：
 
-The theme defines two accordion keyframes:
+- Radix 类组件优先使用 `data-state`。
+- 自定义组件可以使用布尔属性形式，如 `data-active`、`data-disabled`。
+- 避免在每个组件里重复写复杂 attribute selector，统一走这些 variant。
 
-| Keyframes | Direction | Height source |
+## 动画 token
+
+`@theme inline` 中定义了两个 accordion keyframes：
+
+| Keyframes | 方向 | 高度来源 |
 | --- | --- | --- |
-| `accordion-down` | Expand | `--radix-accordion-content-height`, fallback `--accordion-panel-height` |
-| `accordion-up` | Collapse | `--radix-accordion-content-height`, fallback `--accordion-panel-height` |
+| `accordion-down` | 展开 | `--radix-accordion-content-height`，fallback 为 `--accordion-panel-height` |
+| `accordion-up` | 收起 | `--radix-accordion-content-height`，fallback 为 `--accordion-panel-height` |
 
-This supports Radix Accordion while still allowing non-Radix accordion-like components to opt in through `--accordion-panel-height`.
+这组动画兼容 Radix Accordion，也允许非 Radix 组件通过 `--accordion-panel-height` 接入。
 
-## Shared utility
+## 共享 Utility
 
-`styles.css` defines `no-scrollbar`:
+`styles.css` 定义了 `no-scrollbar`：
 
 ```css
 @utility no-scrollbar {
@@ -203,49 +232,59 @@ This supports Radix Accordion while still allowing non-Radix accordion-like comp
 }
 ```
 
-Use it when a region should remain scrollable while hiding the browser scrollbar, such as horizontal tabs or chip lists.
+适用场景：
 
-## Docs app variables
+- 隐藏滚动条但保留滚动能力。
+- 横向 tabs、chip list、移动端横向导航。
+- 需要保持界面安静但内容仍可滚动的区域。
 
-`apps/docs/app/global.css` defines docs-specific layout variables:
+## 文档站变量
 
-| Variable | Value | Meaning |
+`apps/docs/app/global.css` 定义了文档站专用布局变量，也负责把 Fumadocs token 桥接到 Zeron UI 主题。
+
+### 布局变量
+
+| 变量 | 值 | 含义 |
 | --- | --- | --- |
-| `--nav-height` | `61px` | Custom nav height |
-| `--fd-nav-height` | `calc(var(--spacing) * 14)` | Fumadocs nav height |
-| `--fd-layout-width` | `100%` | Docs layout width |
-| `--fd-sidebar-width` | `240px` | Docs sidebar width |
-| `--fd-toc-width` | `240px` | Table of contents width |
-| `--fd-banner-height` | `var(--nav-height)` | Banner height |
+| `--nav-height` | `61px` | 自定义导航高度 |
+| `--fd-nav-height` | `calc(var(--spacing) * 14)` | Fumadocs 导航高度 |
+| `--fd-layout-width` | `100%` | 文档布局宽度 |
+| `--fd-sidebar-width` | `240px` | 文档侧边栏宽度 |
+| `--fd-toc-width` | `240px` | 文档目录宽度 |
+| `--fd-banner-height` | `var(--nav-height)` | banner 高度 |
 
-`landing-page`, `patterns-page`, and `blocks-page` override some layout variables to hide the default docs sidebar and use a wider content layout.
+页面级覆盖：
 
-## Fumadocs token bridge
+- `.landing-page` 将 `--fd-sidebar-width` 和 `--fd-toc-width` 设为 `0px`，并隐藏默认 sidebar。
+- `.patterns-page` 和 `.blocks-page` 隐藏 sidebar，将布局切换为单列主内容。
+- `#nd-page` 使用 `margin-top: calc(var(--nav-height) - 19px)` 修正文档页顶部间距。
 
-The docs app maps Fumadocs variables to Zeron UI semantic tokens:
+### Fumadocs 颜色桥接
 
-| Fumadocs variable | Zeron UI variable |
+| Fumadocs 变量 | Zeron UI 变量 |
 | --- | --- |
-| `--color-fd-background` | `--background` |
-| `--color-fd-primary` | `--primary` |
-| `--color-fd-border` | `--border` |
-| `--color-fd-accent` | `--accent` |
-| `--color-fd-accent-foreground` | `--accent-foreground` |
-| `--color-fd-muted` | `--muted` |
-| `--color-fd-muted-foreground` | `--muted-foreground` |
-| `--color-fd-foreground` | `--foreground` |
-| `--color-fd-secondary` | `--secondary` |
-| `--color-fd-secondary-foreground` | `--secondary-foreground` |
-| `--color-fd-card` | `--card` |
-| `--color-fd-card-foreground` | `--card-foreground` |
-| `--color-fd-popover` | `--popover` |
-| `--color-fd-popover-foreground` | `--popover-foreground` |
-| `--color-fd-primary-foreground` | `--primary-foreground` |
-| `--color-fd-ring` | `--ring` |
+| <ColorIcon value="var(--background)" /> `--color-fd-background` | `--background` |
+| <ColorIcon value="var(--primary)" /> `--color-fd-primary` | `--primary` |
+| <ColorIcon value="var(--border)" /> `--color-fd-border` | `--border` |
+| <ColorIcon value="var(--accent)" /> `--color-fd-accent` | `--accent` |
+| <ColorIcon value="var(--accent-foreground)" /> `--color-fd-accent-foreground` | `--accent-foreground` |
+| <ColorIcon value="var(--muted)" /> `--color-fd-muted` | `--muted` |
+| <ColorIcon value="var(--muted-foreground)" /> `--color-fd-muted-foreground` | `--muted-foreground` |
+| <ColorIcon value="var(--foreground)" /> `--color-fd-foreground` | `--foreground` |
+| <ColorIcon value="var(--secondary)" /> `--color-fd-secondary` | `--secondary` |
+| <ColorIcon value="var(--secondary-foreground)" /> `--color-fd-secondary-foreground` | `--secondary-foreground` |
+| <ColorIcon value="var(--card)" /> `--color-fd-card` | `--card` |
+| <ColorIcon value="var(--card-foreground)" /> `--color-fd-card-foreground` | `--card-foreground` |
+| <ColorIcon value="var(--popover)" /> `--color-fd-popover` | `--popover` |
+| <ColorIcon value="var(--popover-foreground)" /> `--color-fd-popover-foreground` | `--popover-foreground` |
+| <ColorIcon value="var(--primary-foreground)" /> `--color-fd-primary-foreground` | `--primary-foreground` |
+| <ColorIcon value="var(--ring)" /> `--color-fd-ring` | `--ring` |
 
-## Base styles
+这样 Fumadocs 的外壳、侧栏、目录和内容区域可以继承 Zeron UI 的主题，而不是维护一套独立颜色。
 
-`global.css` applies these base rules:
+## 全局基础样式
+
+`global.css` 在 `@layer base` 中定义基础规则：
 
 ```css
 * {
@@ -261,14 +300,18 @@ html {
 }
 ```
 
-It also clips horizontal overflow on `html` and `body` to avoid accidental sideways scrolling.
+补充规则：
 
-## Maintenance notes
+- `html, body { overflow-x: clip; }` 用于避免意外横向滚动。
+- `#nd-page h1`、`h2`、`h3` 统一应用 `tracking-tight`。
+- `figure.shiki` 去掉默认阴影，让代码块视觉更贴近组件库风格。
 
-- Add component colors through semantic variables first, not hard-coded `oklch()` values.
-- When adding a token, define it in both `:root` and `.dark`.
-- Expose new public tokens through `@theme inline`.
-- Keep docs-only layout variables in `apps/docs/app/global.css`.
-- Keep reusable component-library variables in `packages/ui/src/styles.css`.
-- Keep Fumadocs `--color-fd-*` variables bridged to the Zeron UI theme so the docs site does not drift into a second color system.
-- The current `--muted` line has a duplicate semicolon. It does not break CSS parsing, but it can be cleaned up later.
+## 维护建议
+
+- 新增组件颜色时，优先复用现有语义变量，不要在组件内写死 `oklch()`。
+- 只有当现有变量无法表达业务语义时，才新增 token。
+- 新增 token 时，需要同时补齐 `:root` 和 `.dark`，并在 `@theme inline` 中暴露为 Tailwind token。
+- 文档站专用变量应留在 `apps/docs/app/global.css`。
+- 组件库通用变量应留在 `packages/ui/src/styles.css`。
+- Fumadocs 的 `--color-fd-*` 应继续桥接到 Zeron UI 主题，避免 docs app 漂移成第二套设计系统。
+- 当前 `--muted` 行有重复分号 `;;`，不影响浏览器解析，但建议后续清理。

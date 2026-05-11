@@ -61,7 +61,7 @@ export function PatternsPage({
           </div>
 
           {previewPath ? (
-            <div className="min-h-0 w-full flex-1 overflow-hidden rounded-lg bg-muted/40 p-3">
+            <div className="min-h-0 w-full flex-1 overflow-hidden rounded-lg bg-muted p-3">
               <div className="grid h-full min-h-0 grid-rows-[minmax(20rem,40vh)_minmax(0,1fr)] gap-3 lg:grid-cols-[minmax(0,4fr)_minmax(0,1fr)] lg:grid-rows-1">
                 <div className="flex min-h-[24rem] items-center justify-center overflow-hidden rounded-md bg-background lg:min-h-0 border">
                   <PatternPreviewSurface path={previewPath} />
@@ -77,7 +77,7 @@ export function PatternsPage({
               </div>
             </div>
           ) : (
-            <div className="min-h-0 w-full flex-1 overflow-y-auto rounded-lg bg-muted/30 px-5 py-8 lg:px-8">
+            <div className="min-h-0 w-full flex-1 overflow-y-auto rounded-lg bg-muted px-5 py-8 lg:px-8">
               <PatternDocumentHeader
                 description={description}
                 isIndex={isIndex}
