@@ -3,6 +3,8 @@
   "title": "Patterns",
   "pages": [
     "index",
+    "---Agent Detail---",
+    "agent-detail",
     "---Item---",
     "item",
     "---Environment---",

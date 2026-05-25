@@ -3,6 +3,13 @@ export const showQueuedPatterns = false;
 export const visiblePatternDocs = [
   {
     description:
+      "Agent detail panels for behavior guidelines, workflow rules, identity, and user profile notes.",
+    href: "/patterns/agent-detail",
+    name: "Agent Detail",
+    slug: "agent-detail",
+  },
+  {
+    description:
       "Business-ready item compositions for list rows, menu entries, cards, media rows, and action surfaces.",
     href: "/patterns/item",
     name: "Item",

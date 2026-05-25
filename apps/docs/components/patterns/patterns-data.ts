@@ -9,6 +9,7 @@ export type PatternNavItem = {
 };
 
 const patternNames = [
+  "Agent Detail",
   "Accordion",
   "Alert",
   "Alert Dialog",

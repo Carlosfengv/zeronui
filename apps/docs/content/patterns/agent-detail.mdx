@@ -1,0 +1,35 @@
+---
+title: Agent Detail Patterns
+description: Agent detail patterns organize behavior guidelines, workflow rules, identity, and user profile notes into a compact review surface.
+icon: Bot
+installer: pattern-agent-behavior-guidelines
+---
+
+Agent detail patterns compose `Card`, `Button`, and `Badge` primitives into a focused panel for reviewing an agent's rule files. Use them when an agent has multiple markdown-backed behavior documents that need to stay visible without overwhelming the rest of the detail page.
+
+## When to Use
+
+Use Agent Detail when people need to inspect or edit the agent's behavior guidelines, workflow contract, identity, and user profile from one place.
+
+Prefer this pattern for agent settings pages, AI workspace consoles, assistant builders, and admin review flows. If the rule files are long-form documents, pair the pattern with a larger markdown dialog or full-page editor.
+
+## Composition
+
+An Agent Detail pattern is built from:
+
+- `Card`: the outer behavior panel.
+- `Button`: the file switcher and edit action.
+- `Badge`: metadata such as source, sync state, or read-only status.
+- A `tabpanel` region: the active document summary and rule list.
+
+## Install
+
+```bash
+npx shadcn@latest add @zeron-ui/pattern-agent-behavior-guidelines
+```
+
+## Behavior
+
+Keep the switcher labels short and business-facing. The backing file name can appear inside the active panel, where it helps advanced users understand what they are editing.
+
+Default to the most critical policy document, usually behavior guidelines or guardrails. Preserve the selected section while editing, and show read-only or runtime-managed states with metadata rather than disabling the entire panel.
