@@ -486,6 +486,15 @@
       "files": ["apps/docs/examples/pattern-quota-usage-card.tsx"]
     },
     {
+      "name": "pattern-agent-behavior-guidelines",
+      "type": "registry:component",
+      "title": "Agent Behavior Guidelines",
+      "description": "Agent detail behavior panel for guardrails, workflow, identity, and user profile notes.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["badge", "button", "card"],
+      "files": ["apps/docs/examples/pattern-agent-behavior-guidelines.tsx"]
+    },
+    {
       "name": "pattern-environment-variable-editor",
       "type": "registry:component",
       "title": "Environment Variable Editor",
