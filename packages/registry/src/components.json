@@ -206,6 +206,13 @@
       "files": ["packages/ui/src/components/field.tsx"]
     },
     {
+      "name": "filter-badge",
+      "type": "registry:ui",
+      "title": "Filter Badge",
+      "description": "Compact selectable filter badge with optional count indicator.",
+      "files": ["packages/ui/src/components/filter-badge.tsx"]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",

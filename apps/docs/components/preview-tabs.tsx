@@ -8,6 +8,7 @@ import { type ReactNode, useState } from "react";
 type PreviewTabsProps = {
   children: ReactNode;
   filename: string;
+  size?: "default" | "compact";
   source: string;
   type?: "component" | "block";
 };
@@ -15,6 +16,7 @@ type PreviewTabsProps = {
 export function PreviewTabs({
   children,
   filename,
+  size = "default",
   source,
   type = "component",
 }: PreviewTabsProps) {
@@ -24,7 +26,11 @@ export function PreviewTabs({
     <div
       className={cn(
         "my-6 overflow-hidden rounded-lg border bg-background",
-        type === "block" ? "h-[48rem]" : "h-[32rem]",
+        type === "block"
+          ? "h-[48rem]"
+          : size === "compact"
+            ? "h-44"
+            : "h-[32rem]",
       )}
     >
       <div

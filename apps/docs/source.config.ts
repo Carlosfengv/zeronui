@@ -11,6 +11,7 @@ export const docs = defineDocs({
     schema: frontmatterSchema.extend({
       dependencies: z.array(z.string()).optional(),
       installer: z.string().optional(),
+      previewSize: z.enum(["default", "compact"]).optional(),
     }),
   },
 });

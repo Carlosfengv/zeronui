@@ -24,6 +24,7 @@
     "./dialog": "./src/components/dialog.tsx",
     "./dropdown-menu": "./src/components/dropdown-menu.tsx",
     "./field": "./src/components/field.tsx",
+    "./filter-badge": "./src/components/filter-badge.tsx",
     "./input": "./src/components/input.tsx",
     "./input-group": "./src/components/input-group.tsx",
     "./item": "./src/components/item.tsx",

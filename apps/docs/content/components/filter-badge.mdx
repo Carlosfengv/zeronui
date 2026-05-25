@@ -1,0 +1,64 @@
+---
+title: Filter Badge
+description: 用于筛选和状态切换的紧凑型可选中徽标。
+icon: ListFilter
+installer: filter-badge
+previewSize: compact
+---
+
+## 用途
+
+`FilterBadge` 用于承载轻量级筛选项，适合出现在列表工具栏、卡片列表顶部、搜索结果页、资源分类区等位置。它比 `Tabs` 更轻，比普通 `Badge` 多了选中态和可点击语义，适合表达“当前正在按这个条件查看内容”。
+
+常见场景包括：
+
+- 按分类筛选，例如全部、应用、工具、技能
+- 按状态筛选，例如全部、运行中、草稿、已归档
+- 按来源筛选，例如官方、自定义、工作区
+- 展示每个筛选项命中的数量
+
+```tsx
+import { FilterBadge } from "@zeron-ui/ui/filter-badge";
+
+export function Example() {
+  return <FilterBadge selected>All</FilterBadge>;
+}
+```
+
+## 示例
+
+### 不带数字
+
+当筛选项只需要展示名称时，省略 `count`。这种形式适合分类切换、简单状态过滤，视觉更轻，不会抢占列表主体内容的注意力。
+
+<Preview path="filter-badge" size="compact" />
+
+### 带数字
+
+当用户需要知道每个筛选项下有多少结果时，传入 `count`。数字会显示在右侧的小徽标中，常用于数据表、资源列表、任务列表或审计记录筛选。
+
+```tsx
+<FilterBadge selected count={12}>
+  All
+</FilterBadge>
+```
+
+<Preview path="filter-badge-count" size="compact" />
+
+## 用法说明
+
+使用 `selected` 控制选中态，通常由外部状态管理当前筛选值。点击时更新筛选值即可。
+
+```tsx
+const [filter, setFilter] = useState("all");
+
+<FilterBadge
+  count={12}
+  onClick={() => setFilter("all")}
+  selected={filter === "all"}
+>
+  All
+</FilterBadge>
+```
+
+如果需要把同一套视觉用在 `TabsTrigger` 上，可以使用 `filterBadgeVariants` 搭配 `FilterBadgeCount`，让筛选项同时具备 Tabs 的键盘导航和选中管理能力。

@@ -83,7 +83,11 @@ export default async function Page(props: PageProps) {
       <DocsDescription>{page.data.description}</DocsDescription>
       {page.data.installer ? (
         <>
-          <Preview path={page.data.installer} type={type} />
+          <Preview
+            path={page.data.installer}
+            size={page.data.previewSize}
+            type={type}
+          />
           <h2 id="installation">Installation</h2>
           <Installer packageName={page.data.installer} />
         </>

@@ -33,6 +33,7 @@
     "---Display---",
     "avatar",
     "badge",
+    "filter-badge",
     "badge-overflow",
     "card",
     "table",

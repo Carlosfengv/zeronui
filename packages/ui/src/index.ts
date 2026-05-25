@@ -17,6 +17,7 @@ export * from "./components/data-table";
 export * from "./components/dialog";
 export * from "./components/dropdown-menu";
 export * from "./components/field";
+export * from "./components/filter-badge";
 export * from "./components/input";
 export * from "./components/input-group";
 export * from "./components/item";

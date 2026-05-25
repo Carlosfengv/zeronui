@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 import { Slot } from "./slot";
 
 const buttonGroupVariants = cva(
-  "inline-flex w-fit items-stretch rounded-lg shadow-xs has-[[data-size=lg]]:rounded-lg has-[[data-size=sm]]:rounded-md has-[[data-size=xs]]:rounded-sm has-[[data-size=icon-lg]]:rounded-lg has-[[data-size=icon-sm]]:rounded-md has-[[data-size=icon-xs]]:rounded-sm [&>*]:rounded-none [&>*]:shadow-none",
+  "inline-flex w-fit items-center rounded-lg shadow-xs has-[[data-size=lg]]:rounded-lg has-[[data-size=sm]]:rounded-md has-[[data-size=xs]]:rounded-sm has-[[data-size=icon-lg]]:rounded-lg has-[[data-size=icon-sm]]:rounded-md has-[[data-size=icon-xs]]:rounded-sm [&>*]:rounded-none [&>*]:shadow-none [&>[data-orientation=vertical][data-slot=button-group-separator]]:h-8 has-[[data-size=lg]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-9 has-[[data-size=sm]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-7 has-[[data-size=xs]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-6 has-[[data-size=icon-lg]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-9 has-[[data-size=icon-sm]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-7 has-[[data-size=icon-xs]]:[&>[data-orientation=vertical][data-slot=button-group-separator]]:h-6",
   {
     defaultVariants: {
       orientation: "horizontal",
@@ -47,9 +47,9 @@ export function ButtonGroupSeparator({
   return (
     <hr
       className={cn(
-        "border-0 bg-border",
+        "not-prose border-0 bg-border",
         orientation === "vertical"
-          ? "mx-0 my-0 w-px shrink-0 self-stretch"
+          ? "mx-0 my-0 w-px shrink-0 self-center"
           : "my-0 h-px w-full shrink-0",
         className,
       )}
