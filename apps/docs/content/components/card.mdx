@@ -1,6 +1,6 @@
 ---
 title: Card
-description: Layered card and card frame primitives for grouped previews, covers, and structured content.
+description: 用于承载一组相关数据和操作的数据展示容器。
 icon: PanelsTopLeft
 dependencies:
   - https://base-ui.com/
@@ -8,21 +8,119 @@ dependencies:
 installer: card
 ---
 
-## Usage
+## 用途
+
+`Card` 用于把一组强相关的信息组织成可扫描的数据单元，例如资源卡片、对象摘要、状态概览、配置块、详情片段和带操作的数据展示项。
+
+Card 适合用于数据展示，严禁作为布局组件使用。不要为了获得边框、圆角、阴影或间距，把整页区域、主内容区、普通 section、表单页面、网格容器包进 `Card`。页面布局应使用普通的 `div`、section、grid、flex、page shell 等结构完成；只有当内容本身是一条独立的数据记录或一组紧密相关的信息时，才使用 Card。
+
+适合使用 Card 的场景：
+
+- 应用、技能、智能体、灵感、模板等资源列表
+- 仪表盘里的指标摘要、推荐项、告警项
+- 对象详情中的独立信息块，例如配额、凭据、运行状态
+- 需要在同一容器内展示标题、描述、元信息和操作按钮的数据项
+
+不适合使用 Card 的场景：
+
+- 页面主布局、侧栏、内容区域或纯视觉分区
+- 只为了制造背景色、阴影、圆角的装饰性容器
+- 表格、工具栏、筛选区、导航区等已经有明确语义的结构
+- 卡片套卡片的装饰性嵌套
+
+## 引入
 
 ```tsx
 import {
   Card,
+  CardDescription,
+  CardFooter,
   CardFrame,
   CardFrameDescription,
   CardFrameHeader,
   CardFrameTitle,
+  CardHeader,
   CardPanel,
+  CardTitle,
+  ResourceCard,
+  ResourceCardBody,
+  ResourceCardDescription,
+  ResourceCardDivider,
+  ResourceCardFooter,
+  ResourceCardHeader,
+  ResourceCardIcon,
+  ResourceCardMeta,
+  ResourceCardTitle,
 } from "@zeron-ui/ui/card";
 ```
 
-## Examples
+## 组件形态
 
-### Category card
+### 基础 Card
+
+基础 `Card` 是通用数据容器，适合配置块、详情摘要、指标块等相对自由的内容。通常搭配：
+
+- `CardHeader`：标题区域
+- `CardTitle`：标题文本
+- `CardDescription`：标题下的说明文本
+- `CardContent` / `CardPanel`：主体内容区域
+- `CardFooter`：底部操作或补充信息
+
+### CardFrame
+
+`CardFrame` 用于“框架 + 内部卡片”的展示结构，例如组件封面、图库预览、组合式展示。它不是页面布局容器，只用于一个明确的展示对象。
+
+- `CardFrameHeader`：框架标题区域
+- `CardFrameTitle`：框架标题
+- `CardFrameDescription`：框架说明
+- `CardPanel`：框架内部内容区域
+
+### ResourceCard
+
+`ResourceCard` 是面向资源列表的卡片形态，整理自应用、技能、智能体、灵感等业务卡片。它适合展示一个可浏览或可操作的资源对象。
+
+常用子组件：
+
+- `ResourceCardHeader`：顶部信息区，通常包含图标和标题说明
+- `ResourceCardIcon`：资源图标容器
+- `ResourceCardBody`：标题和描述的正文容器
+- `ResourceCardTitle`：资源名称
+- `ResourceCardDescription`：资源短描述
+- `ResourceCardMeta`：标签、来源、数量、状态等元信息
+- `ResourceCardDivider`：内容分隔线
+- `ResourceCardFooter`：底部状态和操作区
+
+`ResourceCard` 支持通过 data 属性表达状态：
+
+- `data-interactive`：资源卡片可点击，会显示指针和 hover 边框反馈
+- `data-selected`：资源处于选中态，适合能力选择、模板选择等场景
+
+## 示例
+
+### 分类展示卡
 
 <Preview path="card" />
+
+### 应用卡片
+
+用于应用市场、连接器商店或集成入口。通常由图标、名称、说明、安装量/认证信息和主操作组成。
+
+<Preview path="card-app" />
+
+### 技能卡片
+
+用于技能市场或能力选择流程。强调技能名称、简介、来源标签、安装量和安装/卸载操作。
+
+<Preview path="card-skill" />
+
+### 智能体卡片
+
+用于智能体列表。需要展示头像、来源、可见范围、运行状态、渠道和进入详情/会话的操作。
+
+<Preview path="card-agent" />
+
+### 灵感卡片
+
+用于灵感库或模板入口。卡片更轻，优先展示灵感标题、短描述和关联角色/能力标签。
+
+<Preview path="card-inspiration" />
