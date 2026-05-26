@@ -1,8 +1,9 @@
 "use client";
 
 import { KeyValue, type KeyValueItem } from "@zeron-ui/ui/key-value";
+import { useState } from "react";
 
-const items: KeyValueItem[] = [
+const initialItems: KeyValueItem[] = [
   {
     id: "database-url",
     key: "DATABASE_URL",
@@ -22,10 +23,18 @@ const items: KeyValueItem[] = [
   },
 ];
 
-export default function KeyValueExample() {
+export default function KeyValueEditExample() {
+  const [items, setItems] = useState(initialItems);
+
   return (
     <div className="w-full max-w-xl">
-      <KeyValue items={items} />
+      <KeyValue
+        addLabel="添加变量"
+        editing
+        items={items}
+        onItemsChange={setItems}
+        valuePlaceholder="输入变量值"
+      />
     </div>
   );
 }

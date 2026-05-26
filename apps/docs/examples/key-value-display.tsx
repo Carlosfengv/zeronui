@@ -15,14 +15,13 @@ const items: KeyValueItem[] = [
     value: "https://api.example.com",
   },
   {
-    id: "stripe-secret",
-    key: "STRIPE_SECRET",
-    masked: true,
-    value: "STRIPE_SECRET_PLACEHOLDER",
+    id: "node-env",
+    key: "NODE_ENV",
+    value: "production",
   },
 ];
 
-export default function KeyValueExample() {
+export default function KeyValueDisplayExample() {
   return (
     <div className="w-full max-w-xl">
       <KeyValue items={items} />

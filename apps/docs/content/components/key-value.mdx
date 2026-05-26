@@ -1,13 +1,28 @@
 ---
 title: Key Value
-description: Display and edit groups of key/value pairs with optional masked values.
+description: 用于展示和编辑键值对数据，支持敏感值遮罩和逐项显隐。
 icon: ListTree
 dependencies:
   - https://tailwindcss.com/
 installer: key-value
 ---
 
-## Usage
+## 用途
+
+Key Value 用于承载结构稳定、行数不多的键值对数据，例如环境变量、请求头、元数据、标签属性、连接配置和集成密钥。它把 key 和 value 固定在同一行中，便于用户快速扫描，也能在需要时进入编辑态完成增删改。
+
+当 value 是 token、secret、连接串等敏感内容时，可以通过 `masked` 默认遮罩，并允许用户只展开当前行查看，避免整组敏感信息同时暴露。
+
+## 使用场景
+
+| 场景 | 用法 |
+| --- | --- |
+| 环境变量 | 展示或编辑 `DATABASE_URL`、`NODE_ENV`、`API_KEY` 等部署配置。 |
+| 请求配置 | 管理 headers、query params、webhook 参数等成组键值。 |
+| 集成设置 | 展示第三方服务的 endpoint、region、token、secret。 |
+| 只读详情 | 在详情页、设置页或卡片内展示简短元数据。 |
+
+## 用法
 
 ```tsx
 import { KeyValue, type KeyValueItem } from "@zeron-ui/ui/key-value";
@@ -22,10 +37,65 @@ const items: KeyValueItem[] = [
 ];
 
 export function Example() {
-  return <KeyValue editing items={items} onItemsChange={() => {}} />;
+  return <KeyValue items={items} />;
 }
 ```
 
-## Examples
+## 变体
 
-<Preview path="key-value" />
+### 显示态
+
+显示态用于详情页、配置预览和保存后的只读状态。默认不传 `editing`，组件会以紧凑的两列布局展示 key 和 value；被标记为 `masked` 的值会默认遮罩，并保留单行显隐操作。
+
+<Preview path="key-value-display" />
+
+```tsx
+<KeyValue items={items} />
+```
+
+### 编辑态
+
+编辑态用于设置页、弹窗表单和配置面板。传入 `editing` 后，key 和 value 会变为可编辑输入框，并默认显示添加和删除操作。通过 `onItemsChange` 接收新的数组，再由业务层决定保存、取消或校验。
+
+<Preview path="key-value-edit" />
+
+```tsx
+<KeyValue
+  addLabel="添加变量"
+  editing
+  items={items}
+  onItemsChange={setItems}
+  valuePlaceholder="输入变量值"
+/>
+```
+
+## 属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `items` | `KeyValueItem[]` | 键值对列表，每一项需要稳定的 `id`。 |
+| `editing` | `boolean` | 是否进入编辑态，默认为 `false`。 |
+| `onItemsChange` | `(items: KeyValueItem[]) => void` | 编辑、添加、删除时触发，由外部维护状态。 |
+| `canAdd` | `boolean` | 是否显示添加按钮；未设置时跟随 `editing`。 |
+| `canRemove` | `boolean` | 是否显示删除按钮；未设置时跟随 `editing`。 |
+| `addLabel` | `string` | 添加按钮文案。 |
+| `keyPlaceholder` | `string` | 编辑态 key 输入框占位文案。 |
+| `valuePlaceholder` | `string` | 编辑态 value 输入框占位文案。 |
+
+## 数据结构
+
+```tsx
+type KeyValueItem = {
+  id: string;
+  key: string;
+  value: string;
+  masked?: boolean;
+};
+```
+
+## 使用建议
+
+- 显示态适合已经保存的数据；编辑态适合草稿数据，保存前可以在业务层做 trim、大小写转换和空行过滤。
+- 敏感信息设置 `masked: true`，让 value 默认以遮罩展示。
+- `id` 应该保持稳定，不要直接使用数组下标，避免编辑和显隐状态错位。
+- 行数较多、需要排序筛选或批量操作时，优先使用表格或专门的数据编辑器。
