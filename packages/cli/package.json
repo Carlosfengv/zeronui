@@ -1,0 +1,31 @@
+{
+  "name": "zeron-ui",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "CLI for installing Zeron UI components into your project.",
+  "bin": {
+    "zeron-ui": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "registry",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build-registry.mjs",
+    "check": "node ./src/index.js --help > /dev/null",
+    "prepack": "pnpm run build",
+    "publish:public": "pnpm publish --access public"
+  },
+  "keywords": [
+    "zeron-ui",
+    "react",
+    "components",
+    "cli"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.18"
+  }
+}

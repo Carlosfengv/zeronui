@@ -1,5 +1,5 @@
 {
-  "name": "zeron-ui",
+  "name": "zeron-ui-workspace",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,8 @@
     "build": "turbo build",
     "check": "turbo check",
     "format": "biome format --write .",
-    "lint": "biome check ."
+    "lint": "biome check .",
+    "publish:cli": "pnpm --filter zeron-ui publish --access public"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.0",

@@ -5,3 +5,4 @@ dist
 *.tsbuildinfo
 .turbo
 .DS_Store
+packages/cli/registry
