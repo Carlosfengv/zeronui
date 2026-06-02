@@ -18,6 +18,13 @@ Dry-run an installation:
 npx zeron-ui add button --dry-run
 ```
 
+Install a pattern or block:
+
+```sh
+npx zeron-ui add pattern-quota-usage-card
+npx zeron-ui add user-app-layout
+```
+
 By default, files are installed under `src` so relative imports keep working:
 
 - `src/components`

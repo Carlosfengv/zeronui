@@ -2,7 +2,7 @@
 
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { access, copyFile, mkdir, readFile, stat } from "node:fs/promises";
+import { access, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +12,7 @@ const packageRoot = path.resolve(
 );
 const registryRoot = path.join(packageRoot, "registry");
 const componentsJsonPath = path.join(registryRoot, "components.json");
-const uiSourceRoot = path.join(registryRoot, "packages/ui/src");
+const blocksJsonPath = path.join(registryRoot, "blocks.json");
 const baseDependencies = [
   "@base-ui/react",
   "class-variance-authority",
@@ -87,7 +87,7 @@ async function addComponents(componentNames, flags) {
     }
 
     await mkdir(path.dirname(targetPath), { recursive: true });
-    await copyFile(file.absolutePath, targetPath);
+    await writeFile(targetPath, await readInstallableFile(file), "utf8");
     console.log(
       `${exists ? "overwrote" : "created"} ${path.relative(cwd, targetPath)}`,
     );
@@ -150,13 +150,20 @@ function expectsValue(name) {
 }
 
 async function readRegistry() {
-  const registry = await readJson(componentsJsonPath);
+  const componentsRegistry = await readJson(componentsJsonPath);
+  const blocksRegistry = await readJson(blocksJsonPath);
 
-  if (!Array.isArray(registry.items)) {
-    throw new Error("registry is missing an items array");
+  if (!Array.isArray(componentsRegistry.items)) {
+    throw new Error("components registry is missing an items array");
   }
 
-  return registry;
+  if (!Array.isArray(blocksRegistry.items)) {
+    throw new Error("blocks registry is missing an items array");
+  }
+
+  return {
+    items: [...componentsRegistry.items, ...blocksRegistry.items],
+  };
 }
 
 function resolveRegistryItems(registry, requestedNames) {
@@ -187,7 +194,9 @@ function resolveRegistryItems(registry, requestedNames) {
 async function resolveFiles(items) {
   const files = new Map();
 
-  async function visit(registryPath) {
+  async function visit(registryFile) {
+    const { registryPath, targetPath } = normalizeRegistryFile(registryFile);
+
     if (files.has(registryPath)) {
       return;
     }
@@ -195,16 +204,16 @@ async function resolveFiles(items) {
     const absolutePath = path.join(registryRoot, registryPath);
     await assertFile(absolutePath, registryPath);
 
-    const relativePath = toUiSourceRelativePath(registryPath);
-    files.set(registryPath, { absolutePath, relativePath });
+    const relativePath = toInstallRelativePath(registryPath, targetPath);
+    files.set(registryPath, { absolutePath, registryPath, relativePath });
 
     const content = await readFile(absolutePath, "utf8");
 
     for (const importPath of findRelativeImports(content)) {
-      const resolved = await resolveLocalImport(relativePath, importPath);
+      const resolved = await resolveLocalImport(registryPath, importPath);
 
       if (resolved) {
-        await visit(`packages/ui/src/${resolved}`);
+        await visit(resolved);
       }
     }
   }
@@ -233,6 +242,10 @@ async function resolveDependencies(items, files) {
     const content = await readFile(file.absolutePath, "utf8");
 
     for (const importPath of findPackageImports(content)) {
+      if (importPath.startsWith("@zeron-ui/ui/")) {
+        continue;
+      }
+
       const packageName = normalizePackageName(importPath);
 
       if (
@@ -274,8 +287,8 @@ function findImportSpecifiers(content) {
   return [...specifiers];
 }
 
-async function resolveLocalImport(fromRelativePath, importPath) {
-  const fromDir = path.dirname(fromRelativePath);
+async function resolveLocalImport(fromRegistryPath, importPath) {
+  const fromDir = path.dirname(fromRegistryPath);
   const candidate = path.normalize(path.join(fromDir, importPath));
   const attempts = [
     candidate,
@@ -286,7 +299,7 @@ async function resolveLocalImport(fromRelativePath, importPath) {
   ];
 
   for (const attempt of attempts) {
-    const absolutePath = path.join(uiSourceRoot, attempt);
+    const absolutePath = path.join(registryRoot, attempt);
 
     if (await isFile(absolutePath)) {
       return attempt;
@@ -296,18 +309,85 @@ async function resolveLocalImport(fromRelativePath, importPath) {
   return null;
 }
 
-function toUiSourceRelativePath(registryPath) {
-  const prefix = "packages/ui/src/";
-
-  if (!registryPath.startsWith(prefix)) {
-    throw new Error(`unsupported registry file path "${registryPath}"`);
+function normalizeRegistryFile(file) {
+  if (typeof file === "string") {
+    return {
+      registryPath: file,
+      targetPath: null,
+    };
   }
 
-  return registryPath.slice(prefix.length);
+  return {
+    registryPath: file.path,
+    targetPath: file.target ?? null,
+  };
+}
+
+function toInstallRelativePath(registryPath, explicitTargetPath) {
+  if (explicitTargetPath) {
+    return explicitTargetPath;
+  }
+
+  const uiPrefix = "packages/ui/src/";
+
+  if (registryPath.startsWith(uiPrefix)) {
+    return registryPath.slice(uiPrefix.length);
+  }
+
+  const examplePrefix = "apps/docs/examples/";
+
+  if (registryPath.startsWith(examplePrefix)) {
+    return `components/${path.basename(registryPath)}`;
+  }
+
+  throw new Error(`unsupported registry file path "${registryPath}"`);
 }
 
 function toTargetPath(uiRelativePath) {
   return uiRelativePath;
+}
+
+async function readInstallableFile(file) {
+  const content = await readFile(file.absolutePath, "utf8");
+
+  return content.replace(
+    /(["'])@zeron-ui\/ui\/([^"']+)\1/g,
+    (_match, quote, subpath) => {
+      const targetModule = toUiImportTarget(subpath);
+      const relativeImport = path
+        .relative(path.dirname(file.relativePath), targetModule)
+        .replaceAll(path.sep, "/");
+      const normalizedImport = relativeImport.startsWith(".")
+        ? relativeImport
+        : `./${relativeImport}`;
+
+      return `${quote}${normalizedImport}${quote}`;
+    },
+  );
+}
+
+function toUiImportTarget(subpath) {
+  if (subpath === "styles.css") {
+    return "styles.css";
+  }
+
+  if (subpath === "utils") {
+    return "lib/utils";
+  }
+
+  if (subpath.startsWith("use-")) {
+    return `hooks/${subpath}`;
+  }
+
+  if (subpath === "data-grid-utils") {
+    return "lib/data-grid";
+  }
+
+  if (subpath === "data-grid-types") {
+    return "lib/data-grid-types";
+  }
+
+  return `components/${subpath}`;
 }
 
 function normalizePackageName(importPath) {

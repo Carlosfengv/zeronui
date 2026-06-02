@@ -5,7 +5,7 @@ type InstallerProps = {
 };
 
 export function Installer({ packageName }: InstallerProps) {
-  const command = `npx shadcn@latest add @zeron-ui/${packageName}`;
+  const command = `npx zeron-ui add ${packageName}`;
 
   return (
     <div className="not-prose overflow-hidden rounded-lg border bg-background">
