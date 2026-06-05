@@ -1,22 +1,28 @@
 ---
 title: Sidebar
-description: A composable collapsible application sidebar with desktop, mobile, and icon states.
+description: 可组合的应用侧边栏组件，支持桌面展开、图标折叠、移动端抽屉和内容区联动。
 icon: PanelLeft
 dependencies:
+  - /components/badge
   - /components/button
   - /components/input
+  - /components/kbd
   - /components/separator
   - /components/skeleton
   - /components/tooltip
 installer: sidebar
+previewLayout: fill
 ---
 
 ## Usage
+
+Sidebar 用来承载应用级主导航、分组菜单、用户入口、工作区入口和内容区触发器。它不是单个静态导航块，而是一组可组合 primitives：用 `SidebarProvider` 管理状态，用 `Sidebar` 渲染侧栏，用 `SidebarInset` 包住页面主体，用 `SidebarTrigger` 提供折叠或移动端打开入口。
 
 ```tsx
 import {
   Sidebar,
   SidebarContent,
+  SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@zeron-ui/ui/sidebar";
@@ -27,8 +33,92 @@ export function Example() {
       <Sidebar>
         <SidebarContent />
       </Sidebar>
-      <SidebarTrigger />
+      <SidebarInset>
+        <SidebarTrigger />
+      </SidebarInset>
     </SidebarProvider>
   );
 }
 ```
+
+## Examples
+
+### Application Sidebar
+
+<Preview path="sidebar" layout="fill" />
+
+这个示例按 Zenova Web 的左侧导航形态整理：顶部是工作区切换器，中间是命令搜索、资源导航和 Agent 分组，底部保留运行状态与用户入口。`collapsible="icon"` 会让桌面端折叠成图标栏，菜单项可通过 `tooltip` 在折叠态展示文字。
+
+## Anatomy
+
+```tsx
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel />
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton />
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarFooter />
+    <SidebarRail />
+  </Sidebar>
+  <SidebarInset />
+</SidebarProvider>
+```
+
+## API
+
+### SidebarProvider
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultOpen` | `boolean` | `true` | 初始展开状态。 |
+| `open` | `boolean` | - | 受控展开状态。 |
+| `onOpenChange` | `(open: boolean) => void` | - | 受控状态变更回调。 |
+| `isMobile` | `boolean` | - | 强制移动端行为，主要用于预览和测试。 |
+
+### Sidebar
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"left" \| "right"` | `"left"` | 侧栏出现的位置。 |
+| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | 侧栏的视觉模式。 |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"offcanvas"` | 折叠方式。`icon` 保留图标栏，`offcanvas` 完全移出屏幕。 |
+
+### SidebarMenuButton
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isActive` | `boolean` | `false` | 当前菜单项是否激活。 |
+| `tooltip` | `string \| TooltipContentProps` | - | 折叠态提示内容。 |
+| `variant` | `"default" \| "outline"` | `"default"` | 菜单按钮样式。 |
+| `size` | `"default" \| "sm" \| "lg"` | `"default"` | 菜单按钮尺寸。 |
+
+## Composition Guide
+
+| 组件 | 用途 |
+| --- | --- |
+| `SidebarHeader` | 放品牌、工作区切换器、组织切换器。 |
+| `SidebarContent` | 放主要导航分组，支持滚动。 |
+| `SidebarGroup` | 组织一组语义相关的导航项。 |
+| `SidebarMenu` | 菜单列表容器。 |
+| `SidebarMenuButton` | 可点击菜单项，支持 active、tooltip 和不同尺寸。 |
+| `SidebarFooter` | 放用户菜单、状态入口或二级操作。 |
+| `SidebarInset` | 页面主体容器，会和 sidebar 状态联动。 |
+| `SidebarRail` | 桌面端侧栏边缘折叠触发区。 |
+
+## Notes
+
+- 页面级布局优先使用 `SidebarProvider + Sidebar + SidebarInset`，不要只单独渲染 `Sidebar`。
+- 产品级 sidebar 应该先抽象信息结构，再套 primitive：工作区、命令搜索、主导航、常用对象、运行状态、用户入口分别占稳定区域。
+- 折叠成图标栏时，给 `SidebarMenuButton` 设置 `tooltip`，避免只剩图标后语义不清。
+- 需要路由跳转时，可以把链接放进 `SidebarMenuButton`，并通过 `isActive` 标记当前页。
+- 移动端打开关闭由 provider 管理；不需要在业务 layout 里额外维护遮罩和抽屉状态。

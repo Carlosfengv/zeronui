@@ -4,7 +4,6 @@ import {
   ResourceCard,
   ResourceCardBody,
   ResourceCardDescription,
-  ResourceCardDivider,
   ResourceCardFooter,
   ResourceCardHeader,
   ResourceCardIcon,
@@ -14,28 +13,28 @@ import { Download, Sparkles, Star } from "lucide-react";
 
 export default function SkillCardExample() {
   return (
-    <ResourceCard className="w-full max-w-sm">
-      <ResourceCardHeader>
-        <ResourceCardIcon className="size-8 rounded-md bg-muted">
-          <Sparkles />
-        </ResourceCardIcon>
-        <ResourceCardBody>
-          <ResourceCardTitle>合同审阅技能</ResourceCardTitle>
-          <ResourceCardDescription>
-            识别风险条款、提取关键义务，并生成结构化修改建议。
-          </ResourceCardDescription>
-        </ResourceCardBody>
-      </ResourceCardHeader>
+    <ResourceCard className="min-h-[168px] w-full max-w-sm" data-interactive>
+      <div className="flex min-h-0 flex-1 flex-col">
+        <ResourceCardHeader>
+          <ResourceCardIcon className="bg-violet-50 text-violet-700">
+            <Sparkles />
+          </ResourceCardIcon>
+          <ResourceCardBody>
+            <ResourceCardTitle>合同审阅技能</ResourceCardTitle>
+            <ResourceCardDescription className="line-clamp-3">
+              识别风险条款、提取关键义务，并生成结构化修改建议。
+            </ResourceCardDescription>
+          </ResourceCardBody>
+        </ResourceCardHeader>
+      </div>
 
-      <ResourceCardDivider />
-
-      <ResourceCardFooter className="pt-3">
-        <div className="flex min-w-0 flex-wrap items-center gap-3 text-muted-foreground text-xs">
-          <Badge className="h-5 rounded-lg bg-muted px-1.5" variant="outline">
+      <ResourceCardFooter className="border-t py-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-3 text-foreground/80 text-xs">
+          <Badge className="h-6 rounded-lg bg-violet-50 px-1.5 text-violet-700">
             官方精选
           </Badge>
           <span className="inline-flex items-center gap-1">
-            <Star className="size-3" />
+            <Star className="size-3.5 text-foreground/55" />
             1.2k
           </span>
         </div>

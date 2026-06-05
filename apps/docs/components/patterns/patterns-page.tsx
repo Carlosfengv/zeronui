@@ -12,6 +12,7 @@ import {
 import { DocsBody } from "fumadocs-ui/layouts/docs/page";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { PreviewSurface } from "../preview";
 import { PatternPreviewTabs } from "./pattern-preview-tabs";
 import { patternDocs, patternItems } from "./patterns-data";
 import { PatternsSidebar } from "./patterns-sidebar";
@@ -133,13 +134,9 @@ async function PatternPreviewSurface({ path }: { path: string }) {
 
   return (
     <PatternPreviewTabs filename={filename} source={source}>
-      <div className="relative flex size-full min-h-0 items-center justify-center overflow-hidden p-6">
-        <div className="-translate-y-px absolute top-8 right-0 left-0 border-[0.5px] border-border/50 border-dashed" />
-        <div className="absolute right-0 bottom-8 left-0 translate-y-px border-[0.5px] border-border/50 border-dashed" />
-        <div className="-translate-x-px absolute top-0 bottom-0 left-8 border-[0.5px] border-border/50 border-dashed" />
-        <div className="absolute top-0 right-8 bottom-0 translate-x-px border-[0.5px] border-border/50 border-dashed" />
+      <PreviewSurface size="compact">
         <Component />
-      </div>
+      </PreviewSurface>
     </PatternPreviewTabs>
   );
 }

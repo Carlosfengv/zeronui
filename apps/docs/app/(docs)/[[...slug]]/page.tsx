@@ -84,6 +84,7 @@ export default async function Page(props: PageProps) {
       {page.data.installer ? (
         <>
           <Preview
+            layout={page.data.previewLayout}
             path={page.data.installer}
             size={page.data.previewSize}
             type={type}
