@@ -13,23 +13,45 @@ import { getMDXComponents } from "../../../components/mdx";
 import { PatternsPage } from "../../../components/patterns/patterns-page";
 import { PoweredBy } from "../../../components/powered-by";
 import { Preview } from "../../../components/preview";
+import { ShowcasePage } from "../../../components/showcase/showcase-page";
 import { source } from "../../../lib/source";
+import { getShowcaseItem } from "../../../lib/showcase-items";
 import HomePage from "./home";
 
 type PageProps = {
   params: Promise<{ slug?: string[] }>;
+  searchParams?: Promise<{ kind?: string }>;
 };
 
 export default async function Page(props: PageProps) {
   const params = await props.params;
 
   if (!params.slug) {
-    return <HomePage />;
+    const searchParams = await props.searchParams;
+
+    return <HomePage activeKind={searchParams?.kind} />;
+  }
+
+  if (params.slug[0] === "showcase") {
+    const item = getShowcaseItem(params.slug[1]);
+
+    if (!item) {
+      notFound();
+    }
+
+    return <ShowcasePage slug={params.slug[1]} />;
   }
 
   const page = source.getPage(params.slug);
 
   if (!page) {
+    const item =
+      params.slug[0] === "components" ? getShowcaseItem(params.slug[1]) : null;
+
+    if (item) {
+      return <ShowcasePage slug={params.slug[1]} />;
+    }
+
     notFound();
   }
 
@@ -106,6 +128,16 @@ export function generateStaticParams() {
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
+  const showcaseItem =
+    params.slug?.[0] === "showcase" ? getShowcaseItem(params.slug[1]) : null;
+
+  if (showcaseItem) {
+    return {
+      title: showcaseItem.name,
+      description: showcaseItem.description,
+    };
+  }
+
   const page = source.getPage(params.slug);
 
   if (!page) {

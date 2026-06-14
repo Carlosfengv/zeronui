@@ -12,7 +12,7 @@ import { Input } from "@zeron-ui/ui/input";
 
 export default function FieldExample() {
   return (
-    <FieldSet className="w-full max-w-sm">
+    <FieldSet className="w-full min-w-[420px] max-w-md">
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="field-name">Name</FieldLabel>

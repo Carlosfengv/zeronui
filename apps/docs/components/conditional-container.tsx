@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 export function ConditionalContainer({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const className =
-    pathname === "/"
+    pathname === "/" || pathname.startsWith("/showcase")
       ? "landing-page"
       : pathname.startsWith("/patterns") || pathname.startsWith("/blocks")
         ? "patterns-page blocks-page"

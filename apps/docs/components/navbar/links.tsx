@@ -27,7 +27,8 @@ export function Links({
         !pathname.startsWith("/components") &&
         !pathname.startsWith("/blocks") &&
         !pathname.startsWith("/icons") &&
-        !pathname.startsWith("/patterns"),
+        !pathname.startsWith("/patterns") &&
+        !pathname.startsWith("/showcase"),
       href: "/docs",
       label: "Docs",
     },
@@ -40,19 +41,19 @@ export function Links({
     {
       active: pathname.startsWith("/components"),
       count: componentsCount,
-      href: "/components/button",
+      href: "/?kind=component",
       label: "Components",
     },
     {
       active: pathname.startsWith("/patterns"),
       count: patternsCount,
-      href: "/patterns",
+      href: "/?kind=pattern",
       label: "Patterns",
     },
     {
       active: pathname.startsWith("/blocks"),
       count: blocksCount,
-      href: "/blocks",
+      href: "/?kind=block",
       label: "Blocks",
     },
   ];

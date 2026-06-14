@@ -27,13 +27,13 @@ export function MobileMenu() {
           <Link href="/icons" onClick={() => setOpen(false)}>
             Icons
           </Link>
-          <Link href="/components/button" onClick={() => setOpen(false)}>
+          <Link href="/?kind=component" onClick={() => setOpen(false)}>
             Components
           </Link>
-          <Link href="/patterns" onClick={() => setOpen(false)}>
+          <Link href="/?kind=pattern" onClick={() => setOpen(false)}>
             Patterns
           </Link>
-          <Link href="/blocks" onClick={() => setOpen(false)}>
+          <Link href="/?kind=block" onClick={() => setOpen(false)}>
             Blocks
           </Link>
         </div>
