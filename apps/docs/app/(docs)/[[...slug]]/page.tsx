@@ -18,6 +18,8 @@ import { source } from "../../../lib/source";
 import { getShowcaseItem } from "../../../lib/showcase-items";
 import HomePage from "./home";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = {
   params: Promise<{ slug?: string[] }>;
   searchParams?: Promise<{ kind?: string }>;
